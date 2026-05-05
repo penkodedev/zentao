@@ -1,0 +1,56 @@
+//------------------------------------------------------------------------
+// PAGE (app/cpt-slug)
+//
+// These are like single page templates for custom post types
+// We have the word "single" on body class for these pages
+// -----------------------------------------------------------------------
+
+@use '../abstracts' as *;
+
+.single .page-title {
+  background-color: rgb(66, 66, 66);
+  margin: 20px 0 20px 0;
+  padding: 40px;
+
+  h1 {
+    color: white;
+    margin: 0;
+    max-width: 80%;
+  }
+}
+
+a.back-to-archive-link {
+  font-family: $text-font;
+  font-size: $text-size - 0.1;
+  color: $text-color;
+  color: #000;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  margin: 20px 0 0 0;
+  gap: 7px;
+
+  svg {
+    width: 1.3em; // Arrow size
+    height: 1.3em; // Arrow size
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    text-decoration: underline;
+
+    svg {
+      transform: translateX(-4px); // Hover animation
+    }
+  }
+}
+
+// **************** META BOX CUSTOM FIELDS STYLES **************** //
+.custom-fields-display {
+  margin-top: 30px;
+
+  p {
+    font-size: 0.9em;
+    margin: 0;
+  }
+}

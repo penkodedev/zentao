@@ -1,0 +1,59 @@
+{
+  "Navigation": {
+    "home": "Inicio",
+    "sitemap": "Mapa del Sitio"
+  },
+  "Content": {
+    "noContentFound": "No se encontró contenido en esta sección.",
+    "share": "Compartir",
+    "shareOn": "Compartir en",
+    "like": "Me gusta",
+    "loadMore": "Cargar más",
+    "loading": "Cargando...",
+    "publishedOn": "Publicado el"
+  },
+  "SliderTitle": {
+    "recursos": "Últimos recursos",
+    "noticias": "Últimas noticias"
+  },
+  "Footer": {
+    "contact": "Contacto",
+    "socialMedia": "Redes Sociales",
+    "latestPosts": "Últimos {postType}",
+    "noRecentPosts": "No se encontraron {postType} recientes."
+  },
+  "Sidebar": {
+    "latestResources": "Últimos recursos",
+    "noRecentResources": "No se encontraron recursos recientes."
+  },
+  "Search": {
+    "placeholder": "Buscar en el sitio",
+    "ariaLabel": "Buscar en el sitio",
+    "loading": "Cargando...",
+    "noResults": "No se encontraron resultados.",
+    "searchButton": "Buscar",
+    "clearButton": "Limpiar",
+    "closeSearch": "Cerrar búsqueda",
+    "modalPlaceholder": "¿Qué estás buscando?",
+    "searchHint": "¿Estabas buscando eso?",
+    "searching": "Buscando...",
+    "noResultsFor": "No se encontraron resultados para \"{query}\"",
+    "updating": "Actualizando resultados..."
+  },
+  "RecursosPage": {
+    "loadMore": "Cargar más",
+    "loading": "Cargando..."
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Cambiar idioma",
+    "switchTo": "Cambiar a {{language}}"
+  },
+  "Errors": {
+    "componentFailed": "Error cargando {component}",
+    "retry": "Reintentar",
+    "loadingContent": "No pudimos cargar el contenido"
+  },
+  "AudioPlayer": {
+    "listenAudio": "Introducción de Audio"
+  }
+}

@@ -1,0 +1,58 @@
+@use 'abstracts' as *;
+
+// WhatsApp Button
+// .whatsapp-container {
+//   z-index: 9999;
+// }
+
+// .whatsapp-right {
+//   right: 30px;
+// }
+
+// .whatsapp-left {
+//   left: 30px;
+// }
+
+.whatsapp-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px !important;
+  height: 56px !important;
+  background-color: #16b34f !important;
+  border-radius: 50%;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  transition: all 0.3s ease;
+  border: none !important;
+
+  &:hover {
+    background-color: #20bd5a;
+    transform: scale(1.1);
+  }
+
+  svg {
+    width: 26px !important;
+    height: 26px !important;
+  }
+}
+
+// Mobile responsive
+@media (max-width: 480px) {
+  .whatsapp-container {
+    bottom: 60px;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%);
+  }
+}
+
+
+.whatsapp-button {
+    bottom:110px !important;
+
+    svg {
+        height: 19px;
+        width: 19px;
+    }
+}

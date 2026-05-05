@@ -1,0 +1,57 @@
+{
+  "Navigation": {
+    "home": "Início",
+    "sitemap": "Mapa do Site"
+  },
+  "Content": {
+    "noContentFound": "Nenhum conteúdo encontrado nesta seção.",
+    "share": "Compartilhar",
+    "like": "Curtir",
+    "loadMore": "Carregar mais",
+    "loading": "Carregando...",
+    "publishedOn": "Publicado em"
+  },
+  "Footer": {
+    "contact": "Contato",
+    "socialMedia": "Redes Sociais",
+    "latestPosts": "Últimos {postType}",
+    "noRecentPosts": "Nenhum {postType} recente encontrado."
+  },
+  "Sidebar": {
+    "latestResources": "Últimos recursos",
+    "noRecentResources": "Nenhum recurso recente encontrado."
+  },
+  "Search": {
+    "placeholder": "Buscar no site...",
+    "ariaLabel": "Buscar no site",
+    "loading": "Carregando...",
+    "noResults": "Nenhum resultado encontrado.",
+    "searchButton": "Buscar",
+    "clearButton": "Limpar",
+    "closeSearch": "Fechar busca",
+    "modalPlaceholder": "O que você está procurando?",
+    "searchHint": "Você estava procurando isso?",
+    "searching": "Buscando...",
+    "noResultsFor": "Nenhum resultado encontrado para \"{query}\""
+  },
+  "RecursosPage": {
+    "loadMore": "Carregar mais",
+    "loading": "Carregando..."
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Alterar idioma",
+    "switchTo": "Mudar para {{language}}"
+  },
+  "Errors": {
+    "componentFailed": "Erro ao carregar {component}",
+    "retry": "Tentar novamente",
+    "loadingContent": "Não foi possível carregar o conteúdo"
+  },
+  "AudioPlayer": {
+    "listenAudio": "Ouvir Introdução"
+  },
+  "SliderTitle": {
+    "recursos": "Últimos recursos",
+    "noticias": "Últimas notícias"
+  }
+}

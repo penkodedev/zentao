@@ -1,0 +1,113 @@
+@use '../abstracts' as *;
+@use '../base' as *;
+
+:root {
+  --primary: #353535;
+  --primary-hover: #eee6e6;
+  --black: #000;
+  --gray: #5E5C5C;
+  --gray-light: #e7e7e7;
+  --radius: 5px;
+  --radius-large: 40px;
+}
+
+/*
+--------------------------------------------------------------------
+                          @BUTTONS
+--------------------------------------------------------------------
+*/
+
+.wp-block-buttons {
+  gap:26px
+}
+
+.wp-block-button__link {
+  height: auto !important; // CLEAN WordPress Height
+}
+
+.button,
+.wp-block-button__link,
+input[type="submit"],
+input[type="submit"].wpcf7-form-control,
+input.wpcf7-form-control.wpcf7-submit,
+input.wpcf7-form-control.wpcf7-submit.has-spinner
+{
+  //display: flex !important; // IMPORTANT to override WP block styles
+  font-family: $text-font, sans-serif;
+  font-size: 1em;
+  text-decoration: none;
+  text-align: center;
+  color: #000;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: .88rem 2.6rem;
+  margin: 10px 0 10px 0;
+  background-color: white;
+  border: 1px solid #bdbdbd;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  //@include icon-after(arrow-right, 1em);
+  
+
+  &:hover {
+    background-color: var(--primary-hover);
+    color: #000;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  // Iconos con Lucide system
+  &.button-with-icon {
+    @include icon-after(arrow-right, 1em);
+  }
+
+  &.button-check {
+    @include icon-after(check, 1em);
+  }
+
+  // Fallback para iconos existentes
+  svg {
+    transition: transform 0.3s ease;
+  }
+
+  &:hover svg {
+    transform: translateX(4px);
+  }
+}
+
+
+//************** Button Copy Code Block *************//
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 5px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: transparent;
+  }
+  
+  svg {
+    stroke: white;
+  }
+}
+
+pre.wp-block-code:hover .copy-btn {
+  color:#000;
+}

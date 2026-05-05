@@ -1,0 +1,58 @@
+@use '../abstracts' as *;
+
+//----------------------------------------------------
+//                   ARTICLE
+//----------------------------------------------------
+
+$article-link: 'article p a, article p a:link, main p a:link, article ul a:link, p#breadcrumbs a,';
+
+#{$article-link} {
+    text-decoration: none;
+    padding: 0px 0px;
+    transition: color 0.6s ease-out, background 0.6s ease-out;
+    background-image: linear-gradient(to right, rgb(71, 71, 71) 100%, #fff 0);
+    background-position: 0 110%;
+    background-repeat: repeat-x;
+    background-size: 100% 18%;
+
+    &:hover {
+        color: #ffffff;
+        background: rgb(71, 71, 71);
+        text-decoration: none;
+        border-bottom: none;
+    }
+}
+
+.wp-block-gallery figure a,
+article a img {
+    transition: transform .3s;
+
+    /* Animation */
+    &:hover {
+        transform: scale(1.013);
+    }
+}
+
+article img {
+    margin-bottom: 18px;
+}
+
+//************ Icons for external links (target="_blank" or external domains)
+main article p a[target="_blank"]:not(.no-icon)::after {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin: 0 2px 4px 4px;
+  background-color: currentColor;       /* icon takes link color */
+  -webkit-mask: url("/icons/external-link.svg") no-repeat center;
+  -webkit-mask-size: contain;
+  mask: url("/icons/external-link.svg") no-repeat center;
+  mask-size: contain;
+}
+
+// Hide if it already has an icon inside
+article a[target="_blank"] .icon-external-link+*::after,
+article a[target="_blank"] .external-icon+*::after {
+    display: none;
+}

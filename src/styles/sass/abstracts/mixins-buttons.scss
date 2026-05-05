@@ -1,0 +1,89 @@
+@use 'var-colors' as *;
+@use 'var-layout' as *;
+@use 'var-typography' as *;
+
+
+:root {
+  --primary: #353535;
+  --primary-hover: #eee6e6;
+  --black: #000;
+  --gray: #5E5C5C;
+  --gray-light: #e7e7e7;
+  --radius: 5px;
+  --radius-large: 40px;
+}
+
+
+@mixin button-base {
+  //display: flex !important; // IMPORTANT to override WP block styles
+  font-family: $text-font, sans-serif;
+  font-size: 1em;
+  text-decoration: none;
+  text-align: center;
+  color: #000;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: .88rem 2.6rem;
+  padding-block: 0 !important;
+  padding-inline: 0 !important;
+  margin: 10px 0 10px 0;
+  background-color: white;
+  border: 1px solid #bdbdbd;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  //@include icon-after(arrow-right, 1em);
+  
+
+  &:hover {
+    background-color: var(--primary-hover);
+    color: #000;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+//   // Iconos con Lucide system
+//   &.button-with-icon {
+//     @include icon-after(arrow-right, 1em);
+//   }
+
+//   &.button-check {
+//     @include icon-after(check, 1em);
+//   }
+
+  // Fallback para iconos existentes
+  svg {
+    transition: transform 0.3s ease;
+  }
+
+  &:hover svg {
+    transform: translateX(4px);
+  }
+}
+
+@mixin button-little {
+    @include button-base();
+    font-size: ($text-size/1.9);
+    padding: 0.5em 1.3em;
+    //border-radius: $border-radius-l; //on theme-layout.scss
+}
+
+@mixin button-medium {
+    @include button-base();
+    font-size: ($text-size/1);
+    padding: 0.68em 2em;
+    //border-radius: $border-radius-m; //on theme-layout.scss
+}
+
+@mixin button-big {
+    @include button-base();
+    font-size: ($text-size+0.4);
+    padding: 0.88em 3.7em;
+    //border-radius: $border-radius-x; //on theme-layout.scss
+}

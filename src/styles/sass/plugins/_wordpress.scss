@@ -1,0 +1,47 @@
+// src/sass/vendors/_wordpress.scss
+
+/**
+ * Estilos para replicar las clases de formato del editor de WordPress (Gutenberg).
+ * Esto nos permite renderizar correctamente el contenido que viene de la API
+ * sin tener que importar la hoja de estilos completa de WordPress.
+ */
+
+.wp-block-buttons {
+  display: flex;
+}
+
+.wp-block-columns {
+  gap: 30px;
+}
+
+// Gallery block
+.wp-block-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9em;
+  margin: 40px 0 40px 0;
+
+  .wp-block-image {
+    flex-grow: 1;
+
+    figure {
+      height: 100%;
+      margin: 0;
+    }
+
+    article img,
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      margin: 0;
+    }
+  }
+
+  &.columns-2 .wp-block-image { flex-basis: calc(50% - 0.5em); }
+  &.columns-3 .wp-block-image { flex-basis: calc(33.33% - 0.5em); }
+  &.columns-4 .wp-block-image { flex-basis: calc(25% - 0.5em); }
+  &.columns-5 .wp-block-image { flex-basis: calc(20% - 0.5em); }
+  &.columns-6 .wp-block-image { flex-basis: calc(16.66% - 0.5em); }
+}

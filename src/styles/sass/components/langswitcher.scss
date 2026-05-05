@@ -1,0 +1,108 @@
+@use 'abstracts' as *;
+
+
+/**********************************************
+      LANGUAGE SWITCHER SIMPLE
+**********************************************/
+.lang-switcher-simple {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    // border: 1px solid #e2e2e2;
+    border-radius: 5px;
+    padding: 7px 10px;
+    position: relative;
+    cursor: pointer;
+    // margin-bottom: 5px; // HARD FIX for alignment issue
+
+    svg.lang-icon {
+        color: #c9c9c9;
+    }
+
+    a {
+        color: #c9c9c9;
+    }
+
+    .current-lang {
+        @include copy-text;
+        font-size: 0.72em;
+        font-weight: 100;
+        color: rgb(255, 255, 255); // COLOR OF THE CURRENT LANG
+        line-height: normal;
+        margin: 0;
+    }
+
+    // Dropdown container
+    .lang-dropdown {
+        display: none;
+        font-size: 0.88em;
+        position: absolute;
+        top: 34px;
+        left: 0;
+        background: inherit;
+        border: inrerit;
+        border-radius: 5px;
+        padding: 0;
+        flex-direction: column;
+        width: 58px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.281);
+        
+        a.lang-link {
+            @include copy-text;
+            font-size: 0.88em;
+            color: rgb(255, 255, 255); // COLOR OF THE LANGUAGE LINKS
+            line-height: normal;
+            border-radius: inherit;
+            margin: 0;
+            padding: 5px 12px;
+            text-align: left;
+            transition: all 0.2s ease;
+
+            &:hover {
+                color: rgb(0, 0, 0);
+                background-color: #888888;
+            }
+        }
+    }
+
+    // Show dropdown on hover
+    &:hover .lang-dropdown {
+        display: flex;
+    }
+}
+
+
+/*************** HOME PAGE OVERRIDE ***************/
+.page-home .lang-switcher-simple {
+    border: none;
+
+    svg.lang-icon {
+        color: #ffffff;
+    }
+
+    .current-lang {
+        color: rgb(255, 255, 255);
+    }
+
+    .lang-dropdown {
+        background: rgba(0, 0, 0, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+
+        .lang-link {
+            color: rgb(180, 180, 180);
+
+            &:hover {
+                color: rgb(255, 255, 255);
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+}
+
+.header-scrolled .lang-switcher-simple {
+    .current-lang,
+    svg.lang-icon,
+    a.lang-link {
+        color: $black;
+    }
+}

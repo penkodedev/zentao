@@ -1,0 +1,328 @@
+@use '../abstracts' as *;
+@use '../abstracts/mixins-typography' as *;
+
+//************************ COPY TEXT ***************************
+p,
+article p {
+    @include copy-text;
+}
+
+article p b,
+article p strong,
+article ul li strong,
+article ol li strong {
+    font-family: $text-font-strong;
+}
+
+
+//************************ HEADINGS ************************
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @include heading;
+}
+
+
+// CLAMP (minimum size, fluid size, maximum size)
+// _fonts.scss
+
+h1 {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1.2; // Sin unidades, proporcional
+}
+
+h2 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.25;
+}
+
+h3 {
+    font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+    line-height: 1.3;
+}
+
+h4 {
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+    line-height: 1.4;
+}
+
+h5 {
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    line-height: 1.45;
+}
+
+h6 {
+    font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+    line-height: 1.5;
+}
+
+
+main h1 {
+    margin: 0 0 20px 0;
+    padding: 7px 0 0 0;
+}
+
+h1.page-title {
+    position: relative;
+    //text-shadow: 1px 1px 2px #ffffff;
+}
+
+//******************** LISTS ARTICLE ************************
+.wp-block-list {
+    padding-left: 0 !important;
+}
+
+article ul {
+    font-family: $text-font;
+    font-size: $text-size;
+    color: $text-color;
+    list-style-type: none;
+    margin: 25px 0 25px 10px;
+    max-width: 900px;
+    margin-block-start: 0 !important; // Override WP BLocks styles
+    padding-inline-start: 15px !important; // Override WP BLocks styles
+
+    p:empty {
+        // Clean Gutenberg <p> between li
+        display: none;
+    }
+
+    li {
+        // line-height: $text-lh;
+        margin-bottom: 7px;
+        // display: flex;
+        align-items: center;
+    }
+
+    li:before {
+        content: "";
+        display: inline-flex;
+        width: 1.3em;
+        height: 1.3em;
+        margin-right: 5px;
+        vertical-align: middle;
+
+        // Lucide Check SVG as mask
+        background-color: black; // Icon Color
+        -webkit-mask: url('/icons/check.svg') no-repeat center;
+        mask: url('/icons/check.svg') no-repeat center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+    }
+
+    a {
+        background-image: none;
+    }
+}
+
+// ***** Nested Lists: Remove check icon and adjust spacing *****
+article ul ul {
+            list-style-type: disc !important;
+            margin: 0 0 0 46px;
+
+            li::before {
+                display: none; // Remove check icon from nested list items
+            }
+}
+
+article ul li ul li {
+    font-size: $text-size - 0.12;
+    margin: 10px 0 0 0;
+}
+
+
+article ol {
+    list-style: none;
+    counter-reset: my-awesome-counter;
+
+    li {
+        font-family: $text-font;
+        counter-increment: my-awesome-counter;
+        margin-bottom: 12px;
+        font-size: $text-size;
+        max-width: 1000px;
+    }
+
+    li::before {
+        content: counter(my-awesome-counter);
+        color: rgb(255, 255, 255);
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        background: $branding-color1;
+        width: 1.8em;
+        height: 1.8em;
+        border-radius: 50%;
+        margin-right: 0.5em;
+    }
+
+    ol ol li::before {
+        background: $branding-color2;
+    }
+
+    ol ol ol li::before {
+        background: $branding-color3;
+    }
+}
+
+//******************** BLOCKQUOTE ************************
+
+blockquote {
+    display: flex;
+    flex-direction: column;
+    border-left: 6px solid $quote-border-color;
+    margin: 40px auto 40px 20px;
+    padding: 28px;
+    max-width: 600px;
+
+    cite {
+        margin: 36px 0 0 0;
+    }
+
+    @media screen and (max-width: 800px) {
+        max-width: 100%;
+        margin: 40px auto 40px 0;
+        padding: 10px;
+    }
+}
+
+blockquote p {
+    font: italic $text-size "Georgia", Times, Times New Roman, Palatino, serif;
+    font-size: 1.4em;
+    line-height: 1.5em;
+    color: $black;
+    text-indent: 1.7em;
+    /*Text indent to fit quote icon size*/
+    position: relative;
+    margin: 0;
+
+    @media screen and (max-width: 800px) {
+        font-size: 1.3em;
+        line-height: 1.24em;
+    }
+
+    &:before {
+        position: absolute;
+        content: open-quote;
+        font: italic $text-size "Georgia", Times, Times New Roman, Palatino, serif;
+        font-size: 3em;
+        font-weight: bold;
+        color: $branding-color1;
+        top: -10px;
+        left: -40px;
+        /*To match text indent position*/
+    }
+
+    &:after {
+        content: close-quote;
+    }
+}
+
+//******************** CITE ************************
+cite {
+    font-family: $text-font;
+    font-size: 1em;
+    font-style: normal;
+    color: $black;
+    padding: 2px 8px;
+    margin-bottom: 0px;
+}
+
+
+//******************** PRE ************************
+
+pre {
+    font: $pre;
+    color: $text-color;
+    background: $branding-color3;
+    border: 1px solid $border-color-medium;
+    margin: 40px 0px 40px 0px !important;
+    padding: $padding40;
+    white-space: pre-wrap;
+}
+
+pre a {
+    color: $link-color;
+}
+
+pre a:hover {
+    color: $link-color-hover;
+}
+
+//******************** CODE ************************
+
+pre.wp-block-code {
+    font-size: 1rem;
+    color: #3ef538;
+    line-height: 1.2rem;
+    background: #2d342a;
+    margin: 10px 0 30px 0 !important;
+    padding: 36px 48px 28px 28px;
+    border: 1px solid #535353 !important;
+    display: inline-block;
+}
+
+
+// ******************* SUMMARY (Details WP block accordion) ****************** //
+details.wp-block-details {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 14px 35px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.185);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    margin: 22px 0 22px 0 !important;
+
+    p {
+        font-size: 1em;
+        padding: 40px 0 0 0;
+    }
+
+    &:hover {
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    summary {
+        font-family: $font-family-base;
+        font-size: 1.1em;
+        font-weight: 600;
+        display: flex;
+        align-items: flex-start;
+        // justify-content: space-between;
+        margin-bottom: 0;
+
+        // Hide native WP marker
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        // Chevron icon
+        &::before {
+            // Change before and after title
+            content: "";
+            width: 30px;
+            height: 30px;
+            background: url('/icons/chevron-down.svg') no-repeat center;
+            transition: transform 0.3s ease;
+            margin-right: 10px;
+        }
+    }
+
+    // Icon Animation
+    &[open] summary::before {
+        // Change before and after title
+        transform: rotate(180deg);
+    }
+}
+
+//******************** CAPTIONS ************************
+captions,
+figcaption,
+p.wp-caption-text,
+.wp-block-image {
+    @include caption;
+}

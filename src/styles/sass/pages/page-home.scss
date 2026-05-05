@@ -1,0 +1,126 @@
+@use '../abstracts/var-typography' as *;
+
+.page-home header {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+}
+
+.page-home header .main-menu li,
+.page-home header .main-menu a,
+.page-home .search-open-button {
+   color:#fff;
+
+   &:hover {
+    color: aqua;
+   }
+}
+
+.page-home .main-menu ul li a::after {
+    background: #fff;
+}
+
+.page-home ul.submenu a {
+    color: #000;
+}
+
+/* Logo is already white from API, no need to invert */
+/* .page-home #logo-container img {
+    filter: invert(1);
+} */
+
+
+// CF7 form grid — two fields side by side per row
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.form-row {
+  p {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-row p {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.box-tarifas {
+    position: relative;
+    background-color: #ffffff;
+    padding: 26px 36px 20px;
+    border: 1px solid #C3C3C3;
+    border-radius: 12px;
+    box-shadow: 0 0 38px 0 rgba(203, 170, 92, 0.35);
+    overflow: hidden; // importante para que no se salga
+  
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url('/images/flowers-down.png');
+      background-repeat: no-repeat;
+      background-position: 360px -20px;
+      opacity: 0.75; 
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    p {
+        font-size: 1.2rem;
+        line-height: 1.4;
+        color: #858585;
+    }
+  }
+  
+
+  .section-full {
+    background-color: #ffffff;
+    padding: 50px;
+
+   
+}
+
+.page-home .full-width {
+  position: relative;
+  background-color: #fff;
+  padding: 50px 0 50px 0;
+  overflow: visible;
+  border: 1px solid #CDCDCD;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background-image: url('/images/flowers-up.png');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    opacity: 0.95;
+    pointer-events: none;
+  }
+}
+
+
+.wp-block-details summary {
+    font-family: $font-family-heading !important;
+    font-size: 1.55rem !important;
+}
+
+
+details.wp-block-details  {
+  padding: 30px 20px 30px 20px !important;
+}
+
+details.wp-block-details p {
+  font-size: 1.2rem !important;
+}

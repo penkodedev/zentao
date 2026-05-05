@@ -1,0 +1,21 @@
+/*
+ * Main SASS file
+ * This file imports all partials in the correct order.
+ * Follows an architecture similar to ITCSS (Inverted Triangle CSS).
+ */
+
+// Import abstracts globally so they are available in all files
+
+@use 'abstracts' as *;
+@use 'base';
+@use 'components';
+@use 'nav';
+@use 'pages';
+@use 'plugins';
+@use 'plugins/yet-another-react-lightbox';
+@use 'responsive';
+@use 'typography';
+
+
+
+// No es fácil!

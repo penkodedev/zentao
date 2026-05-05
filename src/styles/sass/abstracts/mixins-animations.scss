@@ -1,0 +1,312 @@
+// =========================================
+// 🎨 ANIMATION MIXINS
+// =========================================
+// Reusable animation utilities for consistent motion design
+
+@use 'var-colors' as *;
+@use 'var-layout' as *;
+@use 'var-typography' as *;
+
+// =========================================
+// 🎯 FADE ANIMATIONS
+// =========================================
+
+@mixin fade-in($duration: 1s, $delay: 0.5s) {
+  animation: fadeIn $duration ease-in-out $delay forwards;
+  opacity: 0;
+}
+
+
+@mixin fade-out($duration: 0.3s, $delay: 0s) {
+  animation: fadeOut $duration ease-in-out $delay forwards;
+  opacity: 1;
+}
+
+@mixin fade-in-up($duration: 0.4s, $delay: 0s) {
+  animation: fadeInUp $duration ease-out $delay forwards;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+@mixin fade-in-down($duration: 0.4s, $delay: 0s) {
+  animation: fadeInDown $duration ease-out $delay forwards;
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+// =========================================
+// 🎯 SLIDE ANIMATIONS
+// =========================================
+
+@mixin slide-up($duration: 0.4s, $delay: 0s) {
+  animation: slideUp $duration ease-out $delay forwards;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+@mixin slide-down($duration: 0.4s, $delay: 0s) {
+  animation: slideDown $duration ease-out $delay forwards;
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+@mixin slide-left($duration: 0.4s, $delay: 0s) {
+  animation: slideLeft $duration ease-out $delay forwards;
+  transform: translateX(20px);
+  opacity: 0;
+}
+
+@mixin slide-right($duration: 0.4s, $delay: 0s) {
+  animation: slideRight $duration ease-out $delay forwards;
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+@mixin slide-fade-up($duration: 0.5s, $delay: 0s) {
+  animation: slideFadeUp $duration ease-out $delay forwards;
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+@mixin slide-fade-down($duration: 0.5s, $delay: 0s) {
+  animation: slideFadeDown $duration ease-out $delay forwards;
+  transform: translateY(-30px);
+  opacity: 0;
+}
+
+// =========================================
+// 🎯 SCALE ANIMATIONS
+// =========================================
+
+@mixin scale-in($duration: 0.3s, $delay: 0s) {
+  animation: scaleIn $duration ease-out $delay forwards;
+  transform: scale(0.8);
+  opacity: 0;
+}
+
+@mixin scale-hover($scale: 1.05, $duration: 0.2s) {
+  transition: transform $duration ease;
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+@mixin scale-pulse($scale: 1.1, $duration: 1s) {
+  animation: scalePulse $duration ease-in-out infinite;
+}
+
+@mixin scale-bounce($scale: 1.2, $duration: 0.6s) {
+  transition: transform $duration cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+// =========================================
+// 🎯 ROTATION ANIMATIONS
+// =========================================
+
+@mixin rotate-in($duration: 0.4s, $delay: 0s) {
+  animation: rotateIn $duration ease-out $delay forwards;
+  transform: rotate(-10deg) scale(0.8);
+  opacity: 0;
+}
+
+@mixin rotate-hover($duration: 0.4s) {
+  transition: transform $duration ease;
+  &:hover {
+    transform: rotate(5deg);
+  }
+}
+
+@mixin rotate-continuous($duration: 2s) {
+  animation: rotateContinuous $duration linear infinite;
+}
+
+// =========================================
+// 🎯 BOUNCE ANIMATIONS
+// =========================================
+
+@mixin bounce-infinite($duration: 3s) {
+  animation: bounce $duration infinite;
+}
+
+@mixin bounce-in($duration: 0.6s, $delay: 0s) {
+  animation: bounceIn $duration ease-out $delay forwards;
+  transform: scale(0.3);
+  opacity: 0;
+}
+
+@mixin bounce-left($duration: 0.5s) {
+  transition: transform $duration ease;
+  &:hover {
+    animation: bounceLeft $duration ease;
+  }
+}
+
+@mixin bounce-right($duration: 0.5s) {
+  transition: transform $duration ease;
+  &:hover {
+    animation: bounceRight $duration ease;
+  }
+}
+
+@mixin bounce-up($duration: 0.5s) {
+  transition: transform $duration ease;
+  &:hover {
+    animation: bounceUp $duration ease;
+  }
+}
+
+@mixin bounce-down($duration: 0.5s) {
+  transition: transform $duration ease;
+  &:hover {
+    animation: bounceDown $duration ease;
+  }
+}
+
+// =========================================
+// 🎯 KEYFRAMES
+// =========================================
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes rotateIn {
+  to {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceLeft {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-10px); }
+}
+
+@keyframes bounceRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
+@keyframes bounceUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+@keyframes rotateContinuous {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes scalePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes slideFadeUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFadeDown {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+

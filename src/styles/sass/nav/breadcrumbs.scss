@@ -1,0 +1,41 @@
+@use 'abstracts' as *;
+
+nav ul.breadcrumb {
+  font-family: $menu-font;
+  font-size: 0.77em;
+  color: #777777;
+  list-style: none;
+  gap: 1rem 0;
+  margin: 0 0 20px 0 !important;
+  padding: 0 !important;
+
+  li {
+    display: inline;
+
+    &::before {
+      margin-right:0;
+      content: none !important; // Use important to quit article ul class
+      background: none !important;
+      -webkit-mask: none !important;
+      mask: none !important;
+    }
+
+    a {
+      font-size: 0.93em;
+      color: #000;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &+li::before {
+      content: '/' !important;
+      background: none !important;
+      -webkit-mask: none !important;
+      mask: none !important;
+      font-size: 1em;
+      padding: 0 0.4em;
+    }
+  }
+}

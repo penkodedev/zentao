@@ -1,0 +1,145 @@
+// src/styles/sass/components/share-like-buttons.scss
+
+// =============================================================================
+//   SHARE & LIKE BUTTONS
+//   Mantiene la apariencia original, solo añade contador de likes
+// =============================================================================
+
+.button-share-wrapper {
+    position: relative; // Para posicionar el dropdown
+}
+
+.icons-wrap {
+    color: white;
+    display: flex;
+    align-items: center; // Alinear verticalmente
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    gap: 10px;
+
+    // Estilos comunes para ambos iconos
+    .icon-heart,
+    .icon-share {
+        position: relative;
+        cursor: pointer;
+
+        svg {
+            transition: transform 0.2s ease;
+        }
+
+        &:hover svg {
+            transform: scale(1.1);
+        }
+    }
+
+    .icon-heart {
+        color: var(--color-white, #fff);
+
+        // Contador de likes arriba del icono
+        .like-count {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--color-white, #fff);
+            text-align: center;
+            line-height: 1.2;
+            position: absolute;
+            bottom: -17px;
+            right: 0;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+
+            pointer-events: none;
+        }
+
+        // Estado: ya le diste like
+        &.liked svg {
+            fill: currentColor;
+            // color: var(--color-error, #e74c3c);
+        }
+
+        // Estado: límite alcanzado
+        &.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+
+            &:hover svg {
+                transform: none; // No hover si está deshabilitado
+            }
+        }
+    }
+}
+
+// =============================================================
+//   COPY LINK MODAL MESSAGE
+// =============================================================
+
+.copy-modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(6px);
+    background: rgb(255, 255, 255);
+    padding: 20px 40px 20px 40px;
+    border: 1px solid #acacac;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 700ms ease, transform 700ms ease;
+    pointer-events: none;
+    white-space: nowrap;
+
+    p {
+        font-size: 0.98em !important;
+        color: #000000;
+        text-align: left;
+        margin: 0;
+    }
+}
+
+.copy-modal.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+
+// =============================================================
+//   SHARE DROPDOWN MENU
+// =============================================================
+
+.share-dropdown {
+    position: absolute;
+    top: 100%;
+    right: -60px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 5px;
+    min-width: 180px;
+
+    p {
+        font-size: 0.88em;
+        margin: 0;
+    }
+
+    a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 3px 0 3px 12px;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background 0.2s;
+        background-image: none !important;
+
+        &:hover {
+            background: #d8d8d8;
+        }
+
+        svg {
+            flex-shrink: 0;
+        }
+    }
+}

@@ -1,0 +1,86 @@
+// ----------------------------------------------------------------------
+//                    🎨 CORE COLOR SYSTEM
+// ----------------------------------------------------------------------
+// Simplified, maintainable color variables
+
+
+// ************************* Brand Colors *************************** //
+$branding-color1: #757575; // Primary brand color
+$branding-color2: #898989; // Secondary brand color
+$branding-color3: #9b9b9b; // Accent color
+
+
+// ************************* Base Colors *************************** //
+$white: #fff;
+$black: #000;
+$body-color: #f5f5f5;
+
+// Gray Scale System
+$gray100: #f8f9fa;
+$gray200: #efefef;
+$gray300: #dee2e6;
+$gray400: #ced4da;
+$gray500: #adb5bd;
+$gray600: #6c757d;
+$gray700: #495057;
+$gray800: #343a40;
+$gray900: #212529;
+
+
+// ************************* Typography Colors *************************** //
+$text-color: #5a5a5a;
+$heading-color: #000;
+
+
+// ************************* Link Colors *************************** //
+$link-color: #d8ae90;
+$link-color-hover: $branding-color1;
+
+
+// ************************* Layout Colors *************************** //
+$header-bg-color: #fff;
+$main-bg-color: #000;
+$sidebar-bg-color: none;
+$article-bg-color: #fff;
+$section-bg-color: #efefef;
+$footer-bg-color: #e0e0e0;
+
+
+// ************************* Button Colors *************************** //
+$button-bg-color: #536cf0;
+$button-bg-color-hover: #cecece;
+
+
+// ************************* Input Colors *************************** //
+$input-text-color: #000;
+$input-text-color-focus: #f0f0f0;
+$input-bg-color: #fff;
+$input-bg-color-focus: #ffffff;
+$input-border-color: $black;
+$input-border-active-color: $branding-color1;
+
+
+// ************************* Error Colors *************************** //
+$error-bg-color: #cbcb18;
+$error-border-color: $black;
+$error-font-color: $text-color;
+
+
+// ************************* Border Colors *************************** //
+$border-color-medium: $gray200;
+$border-color-bright: $gray400;
+$border-color-dark: $gray600;
+
+
+// ************ Legacy variables (used in specific contexts) ********** //
+$text-color2: $branding-color1;
+$quote-bg-color: none;
+$quote-border-color: $branding-color1;
+$quote-quote-color: $branding-color1;
+$page-title-color: #fff;
+$page-title-bg-color: #536cf0;
+$article-link-color: #d8ae90;
+$article-link-decoration-color: #d89090;
+$article-link-color-hover: #ccc;
+$hr-color-bg: #ccc;
+$text-screen-color: #21759b;

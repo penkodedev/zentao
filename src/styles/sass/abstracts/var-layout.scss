@@ -1,0 +1,38 @@
+// =========================================
+// 📐 CORE LAYOUT SYSTEM
+// =========================================
+// Simplified, maintainable layout variables
+
+
+$header-height: 110px;
+
+// ************************* Spacing Scale *************************** //
+$spacing-xs: 8px;
+$spacing-sm: 16px;
+$spacing-md: 24px;
+$spacing-lg: 40px;  // Used in pre padding
+$spacing-xl: 48px;
+$spacing-xxl: 64px;
+
+// ************************* Border Radius *************************** //
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 24px;
+$radius-xl: 40px;
+
+// ************************* Border Width *************************** //
+$border-thin: 1px;
+$border-normal: 3px;
+$border-thick: 4px;
+$border-extra: 6px;
+
+// ************ Legacy support (used in specific contexts) ********** //
+$border-radius-l: $radius-sm;
+$border-radius-m: $radius-md;
+$border-radius-x: $radius-lg;
+$border-radius-xx: $radius-xl;
+$border-l: $border-thin;
+$border-m: $border-normal;
+$border-x: $border-thick;
+$border-xx: $border-extra;
+$padding40: $spacing-lg;

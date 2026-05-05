@@ -1,0 +1,32 @@
+# Next.js build
+.next
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Auto-generated locale configuration (build-time)
+# src/i18n/locales.generated.json
+
+# Node modules
+node_modules
+
+# Local envs
+.env
+.env.local
+.env.example
+
+# macOS / Windows trash
+.DS_Store
+Thumbs.db
+
+# Estatic exports
+out
+
+# Editor
+.vscode/
+.idea/
+
+# Internal documentation
+RECOMENDACIONES.md
+RECOMENDACIONES.txt
+docs/

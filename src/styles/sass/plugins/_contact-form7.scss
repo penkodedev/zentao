@@ -1,0 +1,251 @@
+@use '../abstracts' as *;
+
+// .hidden-fields-container {
+//   display: none;
+// }
+
+.wpcf7-response-output {
+  font-family: $text-font;
+  font-size: 1em;
+  text-align: center;
+  //background: $error-bg-color;
+  padding: 16px !important;
+  margin: 20px 0 !important;
+  border-radius: 5px !important;
+}
+
+
+.wpcf7-response-output.wpcf7-validation-errors,
+.wpcf7-response-output.wpcf7-mail-sent-ok {
+  background-color: #deffb3 !important;
+  color: #000000 !important;
+  border: 1px solid #adadad !important;
+}
+
+span.wpcf7-not-valid-tip {
+  position: absolute;
+  top: -6px;
+  right: 5px;
+  color: $black;
+  background: $error-bg-color;
+  height: auto;
+  line-height: 25px;
+  padding: 8px;
+  border-radius: $border-m !important; 
+ 
+}
+
+form.wpcf7-form textarea {
+  max-height: 180px;
+}
+
+// Consistent spacing: remove <br> extra line-height and <p> margins.
+// All gaps come exclusively from the wrap margin-bottom.
+form.wpcf7-form {
+  p {
+    margin: 0;
+  }
+
+  br {
+    display: none;
+  }
+}
+
+// Space between CF7 fields
+span.wpcf7-form-control-wrap {
+  margin-bottom: 12px;
+}
+
+
+/********************** Checkbox, Radio & Acceptance **********************/
+
+// Each option on its own line with vertical spacing
+.wpcf7-list-item {
+  display: flex;
+  flex-direction: row;
+  margin: 6px 0;
+}
+
+// Reset floating-label styles that leak from forms.scss
+// and lay out checkbox/radio + text side by side
+.wpcf7-checkbox,
+.wpcf7-radio,
+.wpcf7-acceptance {
+  display: flex;
+  flex-direction: row; // Orientation vertical or horizontal (adjust gap accordingly)
+  gap: 22px; // Space between checkboxes
+  
+
+  label {
+    display: flex;
+    align-items: center;
+    position: static;
+    transform: none;
+    font-size: inherit;
+    top: auto;
+    left: auto;
+    pointer-events: auto;
+    gap: 4px; // Space between checkbox/radio and text
+    cursor: pointer;
+  }
+}
+
+
+/********************** File Upload Dropzone **********************/
+.cf7-file-dropzone {
+  border: 2px dashed #9f9f9f;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:hover,
+  &--active { border-color: $branding-color1; }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    gap: 8px;
+    
+    svg { flex-shrink: 0; }
+  }
+
+  &__browse { color: $branding-color1; text-decoration: underline; }
+
+  &__formats {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.7rem;
+    opacity: 0.4;
+  }
+}
+
+.cf7-file-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+
+  &:empty { display: none; }
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+
+    img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 0;    }
+  }
+
+  &__info {
+    font-size: 0.65rem;
+    white-space: nowrap;
+  }
+
+  &__remove {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    background: white;
+    font-size: 12px;
+    color: $black;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+.table-contact {
+    width: 100%;
+    margin: 5px 0 22px 0;
+    border-radius: 16px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border: 1px solid #B9B9B9 !important;
+
+    tr:first-child td,
+    tr, th {
+      background-color: #ECECEC;
+      border: none !important;
+    }
+
+    td, th {
+      border: none !important;
+      padding: 4px 0 4px 0;
+    }
+
+  td p {
+    font-size: 0.9em;
+    color:#888888;
+    text-align: center;
+  }
+
+  th p {
+    font-size: 0.9em;
+    color: $black;
+    text-align: center;
+  }
+}
+
+
+// =================================================================
+// CF7 SUCCESS MODAL
+// =================================================================
+
+.cf7-success-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.cf7-success-modal {
+  background: #fff;
+  background-image: url('/images/flowers-up.png');
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  border-radius: 16px;
+  padding: 40px 48px;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+
+  p {
+    font-size: 1.33rem;
+    line-height: 1.35;
+    color: $black;
+    margin: 0;
+  }
+
+  &__close {
+    min-width: 120px;
+  }
+}

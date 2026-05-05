@@ -1,0 +1,52 @@
+//------------------------------------------------------------------------
+// PAGES (app/[...slug])
+// These are all the WordPress normal pages like About, Contact, etc.
+// -----------------------------------------------------------------------
+
+.page-content { // Global styles for all pages main bottom margin
+  padding-bottom: 66px;
+}
+
+main  {
+  min-height: 80vh;
+}
+
+.article-content{
+  padding-bottom: 120px;
+}
+
+.page-title {
+  background: rgba(121, 121, 121, 0.1);
+  backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid #b3b3b3;
+  position: relative;
+  padding: 36px;
+  border-radius: 10px;
+  margin: 40px 0 20px 0;
+  line-height: 2.7em;
+  width: 100%;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.full-width {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+
+.page-politica-privacidad,
+.page-terminos-condiciones,
+.politica-de-cookies,
+.aviso-legal {
+  p, li, ol, ul {
+    font-size:1.1rem !important;
+  }
+
+  h2 {
+    margin-top: 60px;
+  }
+}

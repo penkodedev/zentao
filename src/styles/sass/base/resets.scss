@@ -1,0 +1,234 @@
+
+/*
+==============================
+  MODERN CSS RESETS
+  Compatible with Next.js & React
+==============================
+*/
+
+// Lenis Smooth Scroll Styles
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+
+// Modern Box Model (Universal)
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+// CSS Custom Properties
+:root {
+  --scrollbar-width: 0px;
+  --color-text: #111;
+  --color-bg: #F8F7F7;
+}
+
+// HTML Element
+html {
+  text-size-adjust: 100%;
+  min-height: 100%;
+  scrollbar-gutter: stable; /* Avoid full with elements scroll bar */
+  -webkit-text-size-adjust: 100%;
+  --scrollbar-width: 0px; // For .full-width elements class to work
+}
+
+// Body Element
+body {
+  margin: 0;
+  color: var(--color-text);
+  background-color: #F5F5F5;
+}
+
+
+/*
+==============================
+  ELEMENTS RESETS
+==============================
+*/
+
+// Clean Agent Stylesheet on lists
+// ul {
+//     margin-block-start: 0 !important;
+//     margin-block-end: 0 !important;
+//     padding-inline-start: 40px !important;
+// }
+
+// Links
+a {
+  background-color: transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+// Abbreviations
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline dotted;
+}
+
+// Typography
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+// Images
+img {
+  border-style: none;
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
+
+// Form Elements
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+
+// Fieldset
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+  border: none;
+}
+
+// Progress
+progress {
+  vertical-align: baseline;
+}
+
+// Details/Summary
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+  cursor: pointer;
+}
+
+// Templates & Hidden
+template {
+  display: none;
+}
+
+[hidden] {
+  display: none;
+}
+
+/*
+==============================
+  UTILITY BASE STYLES
+==============================
+*/
+
+// Figures
+figure {
+  margin: 0;
+}
+
+// Iframes
+iframe {
+  border: 0;
+  max-width: 100%;
+}
+
+// Horizontal Rules
+hr,
+hr.wp-block-separator {
+  border: 0;
+  height: 2px;
+  width: 100% !important;
+  background: linear-gradient(to right,
+      transparent,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.3),
+      transparent);
+  margin: 40px 0 40px 0;
+}
+
+
+// Screen Reader Only
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

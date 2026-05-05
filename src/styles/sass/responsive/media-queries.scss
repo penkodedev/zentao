@@ -1,0 +1,351 @@
+//----------------------------------------------------
+//            SMALLER THAN 1440px
+//----------------------------------------------------
+@media screen and (max-width: 1440px) {}
+
+
+//----------------------------------------------------
+//            SMALLER THAN 1200px
+//----------------------------------------------------
+@media screen and (max-width: 1200px) {}
+
+
+//----------------------------------------------------
+//            SMALLER THAN 992px
+//----------------------------------------------------
+@media screen and (max-width: 992px) {
+
+    .search-modal-content {
+        width: 90%;
+        padding: 3.5em 2em 2em 2em;
+    }
+}
+
+
+//----------------------------------------------------
+//            SMALLER THAN 768px
+//----------------------------------------------------
+@media screen and (max-width: 768px) {
+
+    // ************** COOKIES CONSENT *************//
+    .cookie-consent-modal {
+        max-width: 90%;
+    }
+
+    .cookie-consent-actions {
+        gap: 0;
+
+        button {
+            padding: 8px;
+            margin: 0 0 4px 0;
+        }
+    }
+
+    // ************** HOME *************//
+    .page-home .home-content {
+        padding: 10px 20px;
+    }
+
+    .page-home .texto-inicio {
+        margin-top: -30px;
+        padding: 50px 20px 40px 20px;
+
+    }
+
+    // ************** GENERAL & LAYOUT *************//
+    .page-one-col {
+        padding: 0 1.2rem;
+    }
+
+    .page-fullwidth {
+        padding: 0 1.2rem;
+
+        .page-title {
+            margin: 20px 0 0 0;
+        }
+    }
+
+    .page-sidebar {
+        padding: 0 1rem;
+
+        aside {
+            min-height: auto;
+        }
+
+        .page-title {
+            margin: 20px 0 20px 0;
+            padding: 20px;
+
+            h1 {
+                line-height: 1.28em;
+            }
+        }
+
+        .post-grid {
+            margin: 20px 0;
+        }
+    }
+
+    .icons-wrap {
+        gap: 4px;
+
+        svg {
+            height: 18px; // ICONS SIZE
+        }
+    }
+
+    aside {
+        border: none;
+        padding: 0;
+
+        .sidebox {
+            position: relative;
+        }
+    }
+
+    .load-more-container {
+        margin: 20px !important;
+    }
+
+    // ************** WP BLOCKS *************//
+    .wp-block-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        
+    }
+
+    // ************** HEADER *************//
+    .header {
+        height: 80px;
+        padding: 15px 20px;
+
+        .actions-container {
+            display: flex;
+            flex-direction: row-reverse; // Hamburguer menus always at the right
+
+            // Mega menu: in mobile always at the right
+            .actions-menu--mega {
+                order: 0;
+            }
+        }
+    }
+
+    // ************** FOOTER *************//
+    footer {
+
+        .footer-content {
+            justify-content: flex-start;
+        }
+
+        .footer-box {
+            margin-bottom: 44px;
+        }
+
+        .footer-menu-nav {
+            display: none;
+        }
+
+        footer .copyright {
+            max-width: 240px;
+        }
+    }
+}
+
+
+//----------------------------------------------------
+//            SMALLER THAN 576px
+//----------------------------------------------------
+@media screen and (max-width: 576px) {
+
+    // ************** COOKIES CONSENT *************//
+    .cookie-consent-modal {
+        width: 100%;
+        max-height: 92vh;
+    }
+
+    .cookie-consent-intro {
+        font-size: 0.85em !important;
+    }
+
+    p.cookie-description {
+        line-height: 1.1rem;
+    }
+
+
+    // ************** HEADER *************//
+    .header .logo-container img {
+        // LOGO SIZE
+        height: 38px;
+    }
+
+    .header .actions-container {
+        column-gap: 12px;
+    }
+
+    a.mobile-menu-toggle svg {
+        // HAMBURGER MENU SIZE
+        height: 36px;
+    }
+
+    .header-desc {
+        font-size: 0.8em;
+    }
+
+
+    // ************** PAGE LAYOUT *************//
+
+    .page-title {
+        padding: 24px;
+        margin: 20px auto 20px auto;
+    }
+
+    ul.breadcrumb {
+        display: none;
+    }
+
+    .post-card {
+        padding: 6px;
+    }
+
+    .post-card h3.post-card-title {
+        line-height: 1.18em;
+    }
+
+    // ************** FOOTER *************//
+
+    .footer small {
+        width: 90%;
+        margin: 0 auto;
+        line-height: 1.2em;
+    }
+
+    .footer-content {
+        margin-bottom: 0;
+        gap: 0;
+    }
+
+    .copyright {
+        margin: 0;
+    }
+
+    //*************** WP BLOCKS ***********//
+    .wp-block-buttons .is-horizontal {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    // ************** CHATBOT *************//
+    // Chat window centered both horizontally and vertically
+    .chat-bot-window {
+        position: fixed !important;
+        left: 50% !important;
+        top: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: translate(-50%, -50%) !important;
+        width: calc(100vw - 40px) !important;
+        max-width: 320px !important;
+        max-height: 80vh !important;
+    }
+
+    //----------------------------------------------------
+    //            SMALLER THAN 400px
+    //----------------------------------------------------
+    @media screen and (max-width: 400px) {
+
+        // ************** MAIN TEXT *************//
+        article p,
+        .entry-content p,
+        .page-content p {
+            font-size: 1rem !important;
+            line-height: 1.55rem !important;
+        }
+
+        // ************** COOKIES CONSENT *************//
+        p.cookie-consent-legal {
+            font-size: 0.7em !important;
+            line-height: 1.2em;
+        }
+
+        // ************** HEADER *************//
+
+        .header-sticky-enabled #logo-container img {
+            // LOGO SIZE
+            height: 38px !important;
+        }
+
+        .lang-switcher-simple {
+            // background: transparent;
+
+            svg {
+                // color: rgb(53, 53, 53) !important;
+                padding: 0;
+            }
+
+            .current-lang {
+                display: none;
+            }
+
+            .swiper .post-card {
+                width: 350px
+            }
+
+
+        }
+
+        // ************** HERO *************//
+        .hero-content {
+            width: 90%
+        }
+
+        // ************** ASIDE *************//
+        aside {
+            margin-bottom: 44px;
+
+            .search-container {
+                display: none;
+            }
+        }
+
+        // ************** FOOTER *************//
+        footer .copyright {
+            align-items: flex-start;
+            max-width: 240px;
+            margin: 0 auto 0 10px;
+
+            div.footer-copy {
+                text-align: left;
+                font-size: 0.7em;
+            }
+
+
+            // ************** LAYOUT *************//
+
+            .post-grid {
+                margin: 20px 0;
+            }
+
+            .post-card {
+                padding: 0;
+                border-radius: 8px;
+            }
+
+            .post-card-content {
+                padding: 18px 10px 8px 10px;
+            }
+
+            .swiper .post-card {
+                width: 320px;
+            }
+
+            // ************** WP BLOCKS *************//
+
+            details.wp-block-details {
+                margin: 10px 14px;
+            }
+
+        }
+    }
+}

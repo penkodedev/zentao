@@ -1,0 +1,305 @@
+// =================================================================
+//                         DARK MODE STYLES
+// =================================================================
+// Dark mode activated via .dark-mode class on <html> element
+// User preference stored in localStorage (see DarkModeToggle.tsx)
+// =================================================================
+
+// Smooth color transitions for all color changes when toggling modes
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+
+
+.dark-mode {
+
+    // =================================================================
+    //                    BASE STYLES
+    // =================================================================
+
+
+    //radial EXPLAINED(ellipse 80% 55% at 10% -20%, var(--pk-bg-glow), transparent)
+    //                  │       │   │      │    │            │             │
+    //                  │       │   │      │    │            │             └─ Fades to fully transparent at edges
+    //                  │       │   │      │    │            └──────────────────── Start color: the glow tint
+    //                  │       │   │      │    └─────────  Y position: -20% (above viewport top)
+    //                  │       │   │      └────────────── X position: 10% (near left edge)
+    //                  │       │   └─────────────────── Vertical radius: 55% of container height
+    //                  │       └─────────────────────── Horizontal radius: 80% of container width
+    //                  └─────────────────────────────── Shape: ellipse (oval, not circle) 
+
+    body {
+        --pk-bg: #141414;
+        --pk-bg-glow: rgba(59, 223, 0, 0.247);
+        --pk-bg-glow2: rgba(0, 160, 223, 0.315);
+
+        background-attachment: fixed;
+        background-color: var(--pk-bg);
+        background-image:
+            radial-gradient(ellipse 80% 55% at 10% -20%, var(--pk-bg-glow), transparent),
+            radial-gradient(ellipse 60% 55% at 90% 125%, var(--pk-bg-glow2), transparent);
+    }
+
+    // =================================================================
+    //                    TYPOGRAPHY & LINKS
+    // =================================================================
+    p,
+    a.back-to-archive-link,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #b1b1b1;
+    }
+
+    article ul li,
+    article ul li a,
+    .post-navigation a,
+    article p a:after {
+        color: #bdbdbd;
+    }
+
+    article ul li:before {
+        background-color: #a9a9a9;
+    }
+
+    article ol li {
+        color: #dbdbdb;
+    }
+
+    nav ul.breadcrumb {
+        li a {
+            color: #ccc;
+        }
+    }
+
+    time.post-date {
+        color: #bdbdbd;
+    }
+
+    .tooltip-link svg {
+        color: #bdbdbd;
+    }
+
+    // =================================================================
+    //                    LAYOUT BORDERS
+    // =================================================================
+    footer,
+    header,
+    aside,
+    .page-title,
+    .footer-box {
+        border-color: #272727;
+    }
+
+    .single .page-title {
+        background-color: #181515;
+    }
+
+    // =================================================================
+    //                    SIDEBAR
+    // =================================================================
+
+    aside ul li a {
+        color: #a9a9a9;
+    }
+
+    .sidebox {
+        background-color: #1f1b1b;
+        border: 1px solid #333;
+    }
+
+
+    // =================================================================
+    //                    HEADER & menú
+    // =================================================================
+    header {
+        background-color: transparent;
+        border-bottom: 0;
+
+        svg,
+        .current-lang,
+        .main-menu ul li,
+        .main-menu ul li a {
+            color: #e0e0e0 !important;
+        }
+    }
+
+    // Home page: solid background when scrolled
+    body.page-home .header.header-scrolled,
+    body .header.header-scrolled {
+        background-color: #1f1f1f !important;
+    }
+
+    body.page-home .header.header-scrolled #logo-container img {
+        filter: invert(0);
+    }
+
+    .mobile-menu-panel {
+        background-color: #292929;
+        border: 1px solid #414141;
+
+        ul li {
+            border-bottom: 1px solid #7d7d7d
+        }
+    }
+
+    .main-menu ul li .submenu {
+        background: #212020;
+        border: none;
+
+        a {
+            color: #e0e0e0;
+
+            &:hover {
+                color: #7a7a7a;
+            }
+        }
+    }
+
+    .scroll-progress-bar {
+        background: linear-gradient(to right, #7e7e7e, #7e7e7e);
+    }
+
+
+
+    // =================================================================
+    //                    POST CARDS
+    // =================================================================
+    .post-card,
+    .post-card-content {
+        background-color: #242424;
+        border: none;
+
+        .post-card-actions a {
+            color: #acacac;
+            background-color: transparent;
+            border: 1px solid #555;
+        }
+    }
+
+    .post-card-content h3 {
+        color: #727272;
+    }
+
+    // =================================================================
+    //                  FORMS SEARCH, INPUTS $ BUTTONS
+    // =================================================================
+    .input-wrapper {
+
+        #search-form-input {
+            background-color: #1f1f1f;
+            border: 1px solid #333;
+        }
+
+        label {
+            color: #c9c9c9;
+        }
+
+        .search-icon {
+            color: #c9c9c9;
+        }
+    }
+
+
+    button,
+    .button,
+    a.wp-block-button__link {
+        background-color: transparent;
+        border-width: 2px;
+        color: #fff;
+    }
+
+
+    // =================================================================
+    //                  AUDIO PLAYER
+    // =================================================================
+    .audio-player {
+        background-color: #181818;
+        border: 1px solid #474747;
+
+        a.play-button svg {
+            color: white;
+        }
+    }
+
+    // =================================================================
+    //                  SEARCH MODAL
+    // =================================================================
+
+    .search-modal-content {
+        background-color: rgb(37 37 37 / 96%);
+        border: 1px solid rgb(75, 75, 75);
+    }
+
+    // =================================================================
+    //                  WORDPRESS BLOCKS
+    // =================================================================
+
+    .wp-block-custom-lucide-icon svg {
+        filter: invert(1);
+    }
+
+    details.wp-block-details {
+        background: #252525;
+        border: 1px solid #3f3f3f;
+    }
+
+    details.wp-block-details summary::before,
+    details.wp-block-details summary p,
+    details.wp-block-details summary strong {
+        filter: invert(1);
+    }
+
+    // =================================================================
+    //                  FOOTER
+    // =================================================================
+
+    footer {
+        background-color: #00000041;
+        border-top: 0;
+    }
+
+    .footer-social ul.social-links li a {
+        color: #fff;
+
+        &:hover {
+            color: #000;
+        }
+    }
+
+    .footer-menu-nav ul a {
+        color: #7d7d7d;
+    }
+
+    .footer-box ul {
+        color: #a9a9a9;
+    }
+
+    // =================================================================
+    //                  GOOGLE MAPS
+    // =================================================================
+    .page-contacta iframe {
+        filter: invert(90%) hue-rotate(180deg);
+    }
+
+
+    // =================================================================
+    //                  LOADING SPINNER
+    // =================================================================
+    .spinner-dots span {
+        background-color: #ccc;
+    }
+
+    .spinner-pulse {
+        background-color: #ccc;
+    }
+
+    .spinner-bars span {
+        background-color: #ccc;
+
+    }
+}

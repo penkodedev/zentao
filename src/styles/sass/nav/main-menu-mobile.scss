@@ -1,0 +1,163 @@
+@use 'abstracts' as *;
+
+// =================================================================
+// MOBILE MENU CONFIGURATION
+// =================================================================
+
+$menu-width: 98vw; // WIDTH OF MOBILE PANEL MENU
+$menu-padding: 60px 5% 10% 5%;
+$menu-bg: rgba(255, 255, 255, 0.822);
+$backdrop-bg: rgba(0, 0, 0, 0.5);
+
+// =================================================================
+// HOME PAGE OVERRIDES
+// =================================================================
+
+.page-home {
+    .mobile-menu-panel ul li a {
+        color: #000;
+    }
+
+    .mobile-menu-toggle {
+        color: #fff;
+
+        &.menu-open {
+            color: #000;
+        }
+    }
+}
+
+// =================================================================
+// MOBILE MENU TOGGLE (CLOSE) BUTTON
+// =================================================================
+
+.mobile-menu-toggle {
+    background: transparent;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    transition: top 0.3s ease;
+
+    .close-icon {
+        position: fixed; // Relativo al viewport
+        top: 2.4rem;
+        right: 2.4rem;
+    }
+
+    svg {
+        transition: transform 0.2s ease, height 0.3s ease, width 0.3s ease;
+        color: inherit;
+    }
+
+    &:hover svg {
+        transform: scale(1.1);
+    }
+}
+
+// =================================================================
+// MOBILE MENU BACKDROP
+// =================================================================
+
+.mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: $backdrop-bg;
+    backdrop-filter: blur(4px);
+}
+
+// =================================================================
+// MOBILE MENU PANEL (Off-canvas)
+// =================================================================
+
+.mobile-menu-panel {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: 20px; // top, right, bottom, left = 20px each
+    margin: 0; // reset margin
+    padding: $menu-padding;
+    height: auto;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 12px;
+    overflow-y: auto;
+    transform: translateZ(0);
+
+    &.main-menu {
+        align-items: normal;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 44px;
+        gap: 0; // CLEAN MAINMENU GAP
+
+        li {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            border-bottom: 1px solid #a5a5a5;
+
+            &:hover {
+                background: #efefef;
+            }
+
+
+            a {
+                font-family: $font-family-bold;
+                font-size: 1.1rem;
+                color: #000;
+                text-decoration: none;
+                display: flex;
+                position: relative;
+                margin: 5px;
+                padding: 3px;
+                transition: background 0.2s ease;
+                
+                &::after {
+                    content: none;
+                }
+            }
+        }
+    }
+
+    // =================================================================
+    // MOBILE SUBMENU 
+    // =================================================================
+    ul.submenu-mobile {
+        display: block;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0 0 0 1rem;
+        min-width: auto;
+        margin: -10px 0 0 0;
+
+        li {
+            display: block;
+            width: 90%;
+            border-bottom: none;
+            padding: 0;
+
+            &:hover {
+                background: #fff;
+            }
+
+            a {
+                font-family: $font-family-base;
+                font-size: 0.9rem;
+                font-weight: normal;
+                padding: 0;
+                background: transparent;
+                display: flex;
+
+                .has-submenu {
+                    margin: 10px 10px 0 10px; // indent submenu items
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,97 @@
+//------------------------------------------------------------------------
+// PAGE SITEMAP (app/sitemap/page)
+//------------------------------------------------------------------------
+
+body.page-sitemap {
+  .sitemap-tree {
+    font-family: monospace;
+    color: #333;
+    margin: 66px 0 126px 0;
+  }
+
+  .sitemap-leaf::before {
+    font-family: monospace !important;
+    content: "├── " !important;
+    color: #5f5f5f !important;
+    -webkit-mask: none !important;
+    mask: none !important;
+    background-image: none !important;
+    background: transparent;
+    
+  }
+
+  .sitemap-leaf:last-child::before {
+    content: "└── " !important;
+  }
+
+.sitemap-branch {
+  margin-bottom: 2rem;
+}
+
+.sitemap-node--root {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 0.5rem;
+  color: #000000;
+  position: relative;
+}
+
+.sitemap-leaves {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sitemap-leaf {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0;
+  position: relative;
+
+  &::before {
+    font-family: system-ui, monospace;
+    content: "├── ";
+    color: #555555;
+    font-weight: 100;
+    //margin-right: 0.2rem;
+  }
+
+  &:last-child::before {
+    content: "└── ";
+  }
+}
+
+li.sitemap-leaf a.sitemap-link {
+  background-image: none;
+
+  &:hover {
+    background: none;
+    text-decoration: underline;
+  }
+}
+
+.sitemap-link {
+  font-size: 0.88em;
+  text-decoration: none;
+  color: #000000;
+  //padding: 0.25rem 0;
+  display: inline-block;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #858585;
+  }
+}
+
+.sitemap-title {
+  padding-left: 10px;
+}
+
+.sitemap-date {
+  font-size: 0.66em;
+  color: #757575;
+  margin-left: 0.5rem;
+
+  &::before {
+    content: "- ";
+  }  }  }
