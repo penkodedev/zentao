@@ -41,13 +41,14 @@ export default function LogoHeader({
     return () => observer.disconnect();
   }, [isHome]);
 
-  // Determine logo based on dark mode
-  // isHome always uses lightLogo
-  // Dark mode (dark background) = lightLogo (white logo to contrast)
-  // Light mode (light background) = darkLogo (dark logo to contrast)
-  const logoSrc = isHome 
-    ? (lightLogo || '') 
-    : (isDark ? (lightLogo || '') : (darkLogo || ''));
+  // Sticky (shrink): always dark logo (black, for light background)
+  // Home: always light logo (white, over hero)
+  // Other pages: follows dark mode toggle
+  const logoSrc = shrink
+    ? (darkLogo || '')
+    : isHome 
+      ? (lightLogo || '') 
+      : (isDark ? (lightLogo || '') : (darkLogo || ''));
 
   return (
     <div id="logo-container" className={shrink ? 'logo-shrink' : ''}>

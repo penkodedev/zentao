@@ -48,7 +48,7 @@ export default function FooterLogo({ title, lightLogo, darkLogo }: FooterLogoPro
         width={90}
         height={55}
         priority
-        style={{ width: '60px', height: 'auto' }}
+        style={{ width: '110px', height: 'auto' }}
         unoptimized
       />
     </div>

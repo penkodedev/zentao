@@ -7,6 +7,7 @@ export interface HeroSlide {
   content_position: 'top' | 'center' | 'bottom';
   content_align: 'left' | 'center' | 'right';
   overlay_opacity: number;
+  overlay_color: string;
   ken_burns: number;
   button_text: string;
   button_link: string;

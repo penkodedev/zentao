@@ -55,6 +55,8 @@ type HeroProps = {
   slides?: HeroSlide[];
   autoPlay?: boolean;
   autoPlayInterval?: number;
+  showDots?: boolean;
+  dotsShape?: 'round' | 'up' | 'down';
 };
 
 export default function Hero({
@@ -67,6 +69,8 @@ export default function Hero({
   slides,
   autoPlay = true,
   autoPlayInterval = 5000,
+  showDots = false,
+  dotsShape = 'round',
 }: HeroProps) {
   // Determinar si usar slides o props individuales
   const heroSlides = slides || (title || subtitle || buttonText ? [{ title, subtitle, buttonText, buttonLink }] : []);
