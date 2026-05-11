@@ -1,15 +1,25 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 // import { MessageCircle } from 'lucide-react';
 
 // Configuración - Teléfono en formato internacional (sin +)
 const WHATSAPP_NUMBER = '34676666854';
-const DEFAULT_MESSAGE = 'Hola, me gustaría más información sobre tus servicios.';
+
+const MESSAGES: Record<string, string> = {
+  es: 'Hola, me gustaría más información sobre vuestros servicios.',
+  en: 'Hi, I would like more information about your services.',
+  pt: 'Olá, gostaria de mais informações sobre os vossos serviços.',
+  'pt-br': 'Olá, gostaria de mais informações sobre os seus serviços.',
+  fr: 'Bonjour, je souhaiterais plus d\'informations sur vos services.',
+  it: 'Ciao, vorrei maggiori informazioni sui vostri servizi.',
+  de: 'Hallo, ich hätte gerne mehr Informationen über Ihre Dienstleistungen.',
+};
 
 // Generar URL de WhatsApp
-const getWhatsAppUrl = (message?: string) => 
-  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message || DEFAULT_MESSAGE)}`;
+const getWhatsAppUrl = (message: string) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 export default function ChatWhatsApp({ 
   position = 'bottom-right',
@@ -18,7 +28,10 @@ export default function ChatWhatsApp({
   position?: 'bottom-right' | 'bottom-left'
   customMessage?: string 
 }) {
-  const whatsappUrl = getWhatsAppUrl(customMessage);
+  const pathname = usePathname();
+  const segment = pathname.split('/')[1];
+  const message = customMessage || MESSAGES[segment] || MESSAGES['es'];
+  const whatsappUrl = getWhatsAppUrl(message);
   
   const positionClass = position === 'bottom-left' ? 'whatsapp-left' : 'whatsapp-right';
 

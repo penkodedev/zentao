@@ -3,6 +3,7 @@
 "use client";
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { menuSwrFetcher } from '@/api/wordpressApi';
 import type { MenuItem, AllMenus } from '@/types/wordpressTypes';
 import { cleanInternalUrl } from '@/utils/wordpress/url';
@@ -34,13 +35,14 @@ type WpNavMenuProps = {
 export function NavItem({ item, isMobile = false, isSubmenu = false, onLinkClick }: { item: MenuItem; isMobile?: boolean; isSubmenu?: boolean; onLinkClick?: () => void }) {
   const wpDomain = process.env.NEXT_PUBLIC_WORDPRESS_API_URL ? new URL(process.env.NEXT_PUBLIC_WORDPRESS_API_URL).origin : '';
   const frontendDomain = process.env.NEXT_PUBLIC_BASE_URL || '';
+  const router = useRouter();
 
   const isInternal = item.url.startsWith(wpDomain) || item.url.startsWith(frontendDomain) || item.url.startsWith('/');
   const linkUrl = isInternal ? cleanInternalUrl(item.url) : item.url;
   
   const hasChildren = item.children && item.children.length > 0;
 
-  // ELocal state to track hover for submenu arrow animation
+  // Local state to track hover for submenu arrow animation
   const [isHovered, setIsHovered] = useState(false);
 
   const liClass = item.classes && item.classes.length > 0 ? item.classes.join(' ') : undefined;
@@ -52,10 +54,34 @@ export function NavItem({ item, isMobile = false, isSubmenu = false, onLinkClick
   // Any internal URL with a meaningful hash fragment → same-page anchor
   const hashIdx = linkUrl.indexOf('#');
   const isHashAnchor = !isAnchorOnly && hashIdx !== -1 && linkUrl.length > hashIdx + 1;
-  // Normaliza hash anchors para que siempre incluyan ruta: "#tecnicas" → "/#tecnicas"
+  // Always include root path: "#tecnicas" → "/#tecnicas", "/#tecnicas" stays as-is
   const anchorHref = isHashAnchor
     ? (linkUrl.startsWith('#') ? `/${linkUrl}` : linkUrl)
     : null;
+
+  // Click handler for hash anchors: scroll without touching the URL
+  const handleHashClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const id = anchorHref!.split('#')[1];
+    if (!id) return;
+
+    const el = document.getElementById(id);
+    if (el) {
+      // Element exists on current page — use Lenis if available, fallback to native
+      const lenis = (window as any).__lenis;
+      if (lenis) {
+        lenis.scrollTo(el, { offset: -100 });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Element not on current page — store target and navigate home (no hash in URL)
+      sessionStorage.setItem('scrollTarget', id);
+      router.push('/');
+    }
+
+    onLinkClick?.();
+  };
 
   // Shared inner content for all link types
   const linkContent = (
@@ -102,13 +128,13 @@ export function NavItem({ item, isMobile = false, isSubmenu = false, onLinkClick
       {isAnchorOnly ? (
         <span className={linkClass}>{linkContent}</span>
       ) : isHashAnchor ? (
-        <Link
+        <a
           href={anchorHref!}
-          onClick={onLinkClick}
+          onClick={handleHashClick}
           {...(linkClass ? { className: linkClass } : {})}
         >
           {linkContent}
-        </Link>
+        </a>
       ) : (
         <Link
           href={linkUrl || '/'} 

@@ -22,12 +22,25 @@ export default function SmoothScroll({ children, enabled = true }: { children: R
       touchMultiplier: 2,
     });
 
+    // Expose lenis globally so NavMenu and other components can scroll without URL change
+    (window as any).__lenis = lenis;
+
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
 
     requestAnimationFrame(raf);
+
+    // Check if a cross-page hash scroll was requested (set by WpNavMenu from a sub-page)
+    const scrollTarget = sessionStorage.getItem('scrollTarget');
+    if (scrollTarget) {
+      sessionStorage.removeItem('scrollTarget');
+      setTimeout(() => {
+        const el = document.getElementById(scrollTarget);
+        if (el) lenis.scrollTo(el, { offset: -100 });
+      }, 400);
+    }
 
     // Stop/start Lenis when modal-open class is toggled on body
     const observer = new MutationObserver(() => {
@@ -39,7 +52,8 @@ export default function SmoothScroll({ children, enabled = true }: { children: R
     });
     observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
-    // Global anchor click interceptor for smooth scroll
+    // Global anchor click interceptor — only intercepts when the target element
+    // exists on the current page. If not found, lets the browser navigate normally.
     const handleAnchorClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href*="#"]');
       if (!anchor) return;
@@ -47,28 +61,22 @@ export default function SmoothScroll({ children, enabled = true }: { children: R
       const href = anchor.getAttribute('href');
       if (!href) return;
 
-      // Extract the hash part (supports "#section", "/#section", "/page#section")
       const hashIndex = href.indexOf('#');
       const hash = href.slice(hashIndex);
 
-      // Skip bare "#" (submenu toggles) and empty hashes
       if (hash === '#' || hash === '') return;
 
-      // If href has a pathname before the hash, only smooth-scroll if we're on that page
-      const pathPart = href.slice(0, hashIndex);
-      if (pathPart && pathPart !== '/' && pathPart !== window.location.pathname) return;
+      const target = document.querySelector(hash);
+      if (!target) return; // element not on this page — don't intercept, let browser navigate
 
       e.preventDefault();
-
-      const target = document.querySelector(hash);
-      if (target) {
-        lenis.scrollTo(target as HTMLElement, { offset: -100 });
-      }
+      lenis.scrollTo(target as HTMLElement, { offset: -100 });
     };
 
     document.addEventListener('click', handleAnchorClick);
 
     return () => {
+      (window as any).__lenis = null;
       document.removeEventListener('click', handleAnchorClick);
       observer.disconnect();
       lenis.destroy();
