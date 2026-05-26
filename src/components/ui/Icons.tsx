@@ -63,7 +63,8 @@ import {
   Pause,
   Volume2,
   Loader2,
-  Info
+  Info,
+  Quote
 } from 'lucide-react';
 
 
@@ -125,6 +126,7 @@ export const Icons = {
   Pause,
   Volume2,
   Loader2,
-  Info
+  Info,
+  Quote
 };
 
