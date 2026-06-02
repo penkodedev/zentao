@@ -39,6 +39,12 @@ const nextConfig = {
         hostname: 'zentaomasajes.es',
       });
 
+      // Allow CMS subdomain (images served from cms.zentaomasajes.es)
+      patterns.push({
+        protocol: 'https',
+        hostname: 'cms.zentaomasajes.es',
+      });
+
       // Additional local hostnames if needed
       if (process.env.NODE_ENV === 'development') {
         patterns.push({
