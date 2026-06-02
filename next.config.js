@@ -22,8 +22,9 @@ const nextConfig = {
       if (apiUrl) {
         try {
           const url = new URL(apiUrl);
+          const protocol = url.protocol.replace(':', '');
           patterns.push({
-            protocol: url.protocol.replace(':', ''),
+            protocol: (protocol === 'http' || protocol === 'https') ? protocol : 'https',
             hostname: url.hostname,
             port: url.port || undefined,
           });
