@@ -36,7 +36,7 @@ const nextConfig = {
       // Always allow penkode.com for external testing
       patterns.push({
         protocol: 'https',
-        hostname: 'penkode.com',
+        hostname: 'zentaomasajes.es',
       });
 
       // Additional local hostnames if needed
@@ -60,10 +60,13 @@ const nextConfig = {
       return [];
     }
 
+    // Sanitize protocol typos (e.g. 'htpps://' → 'https://')
+    const safeUrl = apiUrl.replace(/^htpps:\/\//i, 'https://').replace(/^htp:\/\//i, 'http://');
+
     return [
       {
         source: '/wp-content/:path*',
-        destination: `${apiUrl.replace('/wp-json', '')}/wp-content/:path*`,
+        destination: `${safeUrl.replace('/wp-json', '')}/wp-content/:path*`,
       },
     ]
   },
