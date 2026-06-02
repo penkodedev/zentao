@@ -27,6 +27,10 @@
 //----------------------------------------------------
 @media screen and (max-width: 768px) {
 
+    .wpcf7-form table {
+        display: none;
+    }
+
     // ************** COOKIES CONSENT *************//
     .cookie-consent-modal {
         max-width: 90%;

@@ -61,7 +61,9 @@ const ChatWhatsApp = dynamic(() => import('@/components/ui/ChatWhatsApp'), {
 
 // Generate dynamic metadata from WordPress
 export async function generateMetadata(): Promise<Metadata> {
-  const siteInfo = await safeGetSiteInfo();
+  const headersList = headers();
+  const locale = (headersList.get('x-locale') || localesConfig.defaultLocale) as string;
+  const siteInfo = await safeGetSiteInfo(locale);
   
   if (!siteInfo) {
     // Fallback metadata if WordPress is unreachable
@@ -143,8 +145,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   const headersList = headers();
   
   // Fetch site info and appearance config from WordPress
+  const currentLocaleForFetch = (headersList.get('x-locale') || localesConfig.defaultLocale) as string;
+
   const [siteInfo, appearance] = await Promise.all([
-    safeGetSiteInfo(),
+    safeGetSiteInfo(currentLocaleForFetch),
     getAppearanceSettings(),
   ]);
   

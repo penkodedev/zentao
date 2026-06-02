@@ -38,7 +38,7 @@ const FALLBACK_SITE_INFO: SiteInfo = {
 
 export default async function HeaderConditional({ currentLocale = 'es' }: HeaderConditionalProps) {
   // Fetch site info for the header (safe version)
-  const siteInfo = await safeGetSiteInfo();
+  const siteInfo = await safeGetSiteInfo(currentLocale);
   
   return <Header variant="default" siteInfo={siteInfo} />;
 }

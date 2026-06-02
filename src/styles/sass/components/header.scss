@@ -99,7 +99,7 @@ $header-padding-scrolled: calc($header-height-scrolled * 0.154) $header-padding-
 .header.header-sticky-enabled {
     position: sticky;
     top: 0;
-    transition: all 0.3s ease;
+    transition: height 0.3s ease, padding 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 
     #logo-container {
         transition: all 0.3s ease;
@@ -121,6 +121,10 @@ $header-padding-scrolled: calc($header-height-scrolled * 0.154) $header-padding-
     height: $header-height-scrolled;
     // padding: $header-padding-scrolled;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+
+    svg {
+        color: black; // CHANGE HAMBURGER ICON COLOR WHEN SCROLLED
+    }
 
     .main-menu ul li {
         font-size: 1em;
@@ -158,9 +162,20 @@ $header-padding-scrolled: calc($header-height-scrolled * 0.154) $header-padding-
 
 
 // Styles for home page header when scrolled
+// backdrop-filter se aplica en ::before para que no cree un containing block
+// para los elementos position:fixed hijos (como el mobile-menu-panel)
 body.page-home .header.header-scrolled {
-    background-color: rgba(255, 255, 255, 0.60); 
-    backdrop-filter: blur(12px);
+    background-color: transparent;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: rgba(255, 255, 255, 0.60);
+        backdrop-filter: blur(12px);
+        z-index: -1;
+        border-radius: inherit;
+    }
 
     .main-menu ul li,
     .main-menu ul li a,

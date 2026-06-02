@@ -14,6 +14,7 @@ import { withErrorBoundary } from '@/utils/ErrorBoundary';
 import { Icons } from '@/components/ui/Icons';
 import SearchForm from '@/components/forms/SearchForm';
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 /**
  * Props for the WpNavMenu component.
@@ -281,62 +282,88 @@ function WpNavMenu({
   return (
     <>
       
-      {/* Burger Icon */}
+      {/* Burger Icon — siempre en el header, solo muestra la hamburguesa */}
       <a 
-        className={`mobile-menu-toggle ${isMobileMenuOpen ? 'menu-open' : ''}`}
+        className="mobile-menu-toggle"
         onClick={(e) => {
           e.preventDefault();
           setIsMobileMenuOpen(!isMobileMenuOpen);
         }}
         href="#menu"
-        aria-label="Toggle menu"
+        aria-label="Abrir menú"
         aria-expanded={isMobileMenuOpen}
       >
-        {/* Change size and strokeWidth of X and burger icons */}
         {/* Available burger icons: Icons.Menu, Icons.AlignJustify, Icons.AlignLeft, Icons.AlignRight, Icons.MoreVertical, Icons.MoreHorizontal */}
-        {isMobileMenuOpen 
-          ? <Icons.X size={28} strokeWidth={1} className="close-icon" /> 
-          : <Icons.AlignRight size={36} strokeWidth={1.2} className="burger-icon" />} 
+        <Icons.AlignRight size={36} strokeWidth={1.2} className="burger-icon" />
       </a>
-      
 
-      {/* Backdrop */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            className="mobile-menu-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+      {/* Backdrop + Close (X) + Panel — renderizados en document.body via portal para evitar
+          que cualquier containing block del <header> (backdrop-filter, GPU layer)
+          afecte al position:fixed del panel. El botón X también vive aquí para
+          garantizar que esté por encima del panel sin necesidad de z-index manuales. */}
+      {typeof document !== 'undefined' && createPortal(
+        <>
+          {/* Backdrop */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                className="mobile-menu-backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+            )}
+          </AnimatePresence>
 
-      {/* Off-canvas Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.nav
-            className={`${className} mobile-menu-panel`}
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-          >
-            <ul>
-              {menuItems.map((item) => (
-                <NavItem 
-                  key={item.id} 
-                  item={item} 
-                  isMobile={true} 
-                  onLinkClick={() => setIsMobileMenuOpen(false)}
-                />
-              ))}
-            </ul>
-            {/* <SearchForm /> */}
-          </motion.nav>
-        )}
-      </AnimatePresence>
+          {/* Panel */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.nav
+                className={`${className} mobile-menu-panel`}
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'tween', duration: 0.3 }}
+              >
+                <ul>
+                  {menuItems.map((item) => (
+                    <NavItem 
+                      key={item.id} 
+                      item={item} 
+                      isMobile={true} 
+                      onLinkClick={() => setIsMobileMenuOpen(false)}
+                    />
+                  ))}
+                </ul>
+                {/* <SearchForm /> */}
+              </motion.nav>
+            )}
+          </AnimatePresence>
+
+          {/* Botón X — renderizado después del panel para quedar encima en el stacking order */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.a
+                className="mobile-menu-toggle menu-open"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMobileMenuOpen(false);
+                }}
+                href="#menu"
+                aria-label="Cerrar menú"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <Icons.X size={28} strokeWidth={1} className="close-icon" />
+              </motion.a>
+            )}
+          </AnimatePresence>
+        </>,
+        document.body
+      )}
     </>
   );
 }
