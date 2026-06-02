@@ -65,10 +65,9 @@ const nextConfig = {
 
     return [
       {
-        // Proxy /cms/* al servidor del hosting (WordPress) usando IP directa
-        // para evitar bucle de DNS ahora que zentaomasajes.es apunta a Vercel
+        // Proxy /cms/* al subdominio del hosting (document root = /public_html/cms)
         source: '/cms/:path*',
-        destination: 'http://75.102.57.125/cms/:path*',
+        destination: 'http://cms.zentaomasajes.es/:path*',
       },
       {
         source: '/wp-content/:path*',
