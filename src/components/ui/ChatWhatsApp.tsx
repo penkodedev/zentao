@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 // import { MessageCircle } from 'lucide-react';
 
 // Configuración - Teléfono en formato internacional (sin +)
-const WHATSAPP_NUMBER = '34676666854';
+const WHATSAPP_NUMBER = '34619362844';
 
 const MESSAGES: Record<string, string> = {
   es: 'Hola, me gustaría más información sobre vuestros servicios.',
