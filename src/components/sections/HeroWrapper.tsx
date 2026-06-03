@@ -17,12 +17,10 @@ interface HeroWrapperProps {
 export default async function HeroWrapper({ position, lang }: HeroWrapperProps) {
   const heroData = await getHeroData(position, lang);
   
-  // If no active hero for this position, don't render anything
+  // If no active hero or API failed, render nothing
   if (!heroData || !heroData.active || !heroData.slides || heroData.slides.length === 0) {
-    // Fallback to hardcoded hero
-    return <HeroConfig />;
+    return null;
   }
   
-  // Pass WordPress data to HeroConfig
   return <HeroConfig heroData={heroData} />;
 }
