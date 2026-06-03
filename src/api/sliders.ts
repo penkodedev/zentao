@@ -58,5 +58,5 @@ export interface SliderData {
 
 export async function getSliderById(id: number, lang?: string): Promise<SliderData | null> {
   const endpoint = lang ? `/custom/v1/sliders/${id}?lang=${lang}` : `/custom/v1/sliders/${id}`;
-  return await fetchAPI<SliderData>(endpoint);
+  return await fetchAPI<SliderData>(endpoint, { next: { revalidate: 300 } });
 }

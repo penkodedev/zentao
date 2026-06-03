@@ -96,7 +96,11 @@ export default function LangSwitcher({ currentLocale }: LangSwitcherProps) {
     // If translatedUrls[targetLang] is null, it means the API call is in progress or failed
     // In that case, try to construct the URL manually instead of falling back to home
     if (pageId && translatedUrls[targetLang] !== undefined && translatedUrls[targetLang] !== null) {
-      return translatedUrls[targetLang];
+      const rawUrl = translatedUrls[targetLang]!;
+      const path = rawUrl.startsWith('http')
+        ? rawUrl.replace(/^https?:\/\/[^\/]+/, '')
+        : rawUrl;
+      return path || '/';
     }
     
     // Handle home page

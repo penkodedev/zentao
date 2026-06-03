@@ -71,7 +71,7 @@ export async function fetchAPI<T>(
         ...customHeaders,
       },
       body: body ? JSON.stringify(body) : null,
-      next: next || { revalidate: 30 },
+      next: next || { revalidate: 300 },
     });
 
     if (!res.ok) {
