@@ -69,17 +69,7 @@ const nextConfig = {
     // Sanitize protocol typos (e.g. 'htpps://' → 'https://')
     const safeUrl = apiUrl.replace(/^htpps:\/\//i, 'https://').replace(/^htp:\/\//i, 'http://');
 
-    return [
-      {
-        // Proxy /cms/* al subdominio del hosting (document root = /public_html/cms)
-        source: '/cms/:path*',
-        destination: 'http://cms.zentaomasajes.es/:path*',
-      },
-      {
-        source: '/wp-content/:path*',
-        destination: `${safeUrl.replace('/wp-json', '')}/wp-content/:path*`,
-      },
-    ]
+    return []
   },
 
   async headers() {

@@ -10,7 +10,6 @@ import { getMessages } from 'next-intl/server';
 import { SWRConfig } from 'swr';
 
 import "@/styles/sass/main.scss";
-import WpStyles from "@/components/wordpress/WpStyles";
 
 import HeaderServer from '@/components/layout/header/HeaderServer';
 import Footer from "@/components/layout/footer/Footer";
@@ -179,7 +178,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         )}
         <link rel="preload" href="/fonts/poppins-regular/Poppins-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/poppins-bold/Poppins-Bold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <WpStyles />
         {/* Language sync script in head for immediate execution */}
         <script
           dangerouslySetInnerHTML={{
