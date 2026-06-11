@@ -40,10 +40,15 @@ export function processContent(content: string, blocks?: WpBlock[]): string {
 
 	const backendUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.replace('/wp-json', '');
 
-	// Replace backend URLs with relative paths
+	// Replace backend URLs with relative paths ONLY in href attributes (navigation links).
+	// We intentionally leave src/srcset/data-src intact so images and media continue
+	// to load directly from the CMS domain (cms.zentaomasajes.es) without needing a proxy rewrite.
 	if (backendUrl) {
-		const backendUrlRegex = new RegExp(backendUrl.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g');
-		processedContent = processedContent.replace(backendUrlRegex, '');
+		const escaped = backendUrl.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+		processedContent = processedContent.replace(
+			new RegExp(`(href=["'])${escaped}`, 'g'),
+			'$1'
+		);
 	}
 
 	// Add data-next-ignore to modal links

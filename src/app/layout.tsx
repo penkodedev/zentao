@@ -26,6 +26,7 @@ import BodyClass from "@/utils/wordpress/BodyClass";
 import { WpPageIdProvider } from '@/utils/wordpress/WpPageIdContext';
 import localesConfig from '@/i18n/locales.generated.json';
 import Analytics from '@/components/tracking/Analytics';
+import WpStyles from '@/components/wordpress/WpStyles';
 import { safeGetSiteInfo, getAppearanceSettings } from '@/api/wordpressApi';
 import type { AppearanceSettings } from '@/api/wordpressApi';
 
@@ -178,6 +179,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         )}
         <link rel="preload" href="/fonts/poppins-regular/Poppins-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/poppins-bold/Poppins-Bold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <WpStyles />
         {/* Language sync script in head for immediate execution */}
         <script
           dangerouslySetInnerHTML={{
