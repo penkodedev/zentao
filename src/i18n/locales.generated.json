@@ -1,9 +1,8 @@
 {
   "supportedLocales": [
-    "es",
     "en",
-    "pt-br"
+    "es"
   ],
-  "defaultLocale": "es",
-  "generatedAt": "2026-01-29T18:56:52.974Z"
+  "defaultLocale": "en",
+  "generatedAt": "2026-06-11T09:47:21.042Z"
 }
