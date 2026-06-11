@@ -45,8 +45,11 @@ export function processContent(content: string, blocks?: WpBlock[]): string {
 	// to load directly from the CMS domain (cms.zentaomasajes.es) without needing a proxy rewrite.
 	if (backendUrl) {
 		const escaped = backendUrl.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+		// Strip backend domain from href attributes for navigation links only.
+		// Exclude /wp-content/ paths (gallery image links, file downloads) so they
+		// keep their absolute CMS URL — required for the lightbox and direct downloads.
 		processedContent = processedContent.replace(
-			new RegExp(`(href=["'])${escaped}`, 'g'),
+			new RegExp(`(href=["'])${escaped}(?!\\/wp-content\\/)`, 'g'),
 			'$1'
 		);
 	}
