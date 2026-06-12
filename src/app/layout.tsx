@@ -110,6 +110,9 @@ export async function generateMetadata(): Promise<Metadata> {
         : 'es_ES',
       type: 'website',
     },
+    verification: {
+      google: '1niwhUTul8A_GNN-0I9a47sYXmCx1IaoObIeRJSaEts',
+    },
     twitter: {
       card: 'summary_large_image',
       title: siteInfo.title,

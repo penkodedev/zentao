@@ -5,6 +5,14 @@
  * Usage: npm run prebuild (automatic) or tsx src/utils/build/fetch-locales.ts
  */
 
+// Load .env.local before reading any process.env variable.
+// tsx does not load .env.local automatically (unlike `next dev`), so we do it manually.
+// In Vercel/CI, variables are already injected at OS level — dotenv won't overwrite them.
+import { config } from 'dotenv';
+import { resolve } from 'path';
+config({ path: resolve(process.cwd(), '.env.local') });
+config({ path: resolve(process.cwd(), '.env') });
+
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 
