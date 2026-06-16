@@ -176,7 +176,10 @@
         line-height: 1.1rem;
     }
 
-
+    .hero-content p {
+        max-width: 74%;
+        margin: 0 auto;
+    }
     // ************** HEADER *************//
     .header .logo-container img {
         // LOGO SIZE
