@@ -52,7 +52,10 @@ export async function getHeroData(
 ): Promise<HeroData | null> {
   const endpoint = `/custom/v1/hero?position=${position}${lang ? `&lang=${lang}` : ''}`;
   const data = await fetchAPI<HeroData>(endpoint, {
-    next: { revalidate: 300 }
+    next: { 
+      revalidate: 300,
+      tags: ['hero', `hero-${position}`]
+    }
   });
   return data;
 }

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET;
 
-const KNOWN_TAGS = ['site-info', 'all-posts', 'all-pages', 'all-menus', 'taxonomies'];
+const KNOWN_TAGS = ['site-info', 'all-posts', 'all-pages', 'all-menus', 'taxonomies', 'hero'];
 
 /**
  * On-demand revalidation webhook for WordPress → Next.js.
