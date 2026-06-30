@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import { fetchAPI } from './client';
 
 export interface AppearanceSettings {
@@ -17,7 +18,15 @@ export interface AppearanceSettings {
   ttsEnabled: boolean;
 }
 
+export const getCachedAppearanceSettings = unstable_cache(
+  async (lang?: string): Promise<AppearanceSettings | null> => {
+    const endpoint = lang ? `/custom/v1/appearance?lang=${lang}` : '/custom/v1/appearance';
+    return await fetchAPI<AppearanceSettings>(endpoint);
+  },
+  ['appearance-settings'],
+  { revalidate: 300, tags: ['appearance-settings'] }
+);
+
 export async function getAppearanceSettings(lang?: string): Promise<AppearanceSettings | null> {
-  const endpoint = lang ? `/custom/v1/appearance?lang=${lang}` : '/custom/v1/appearance';
-  return await fetchAPI<AppearanceSettings>(endpoint);
+  return await getCachedAppearanceSettings(lang);
 }

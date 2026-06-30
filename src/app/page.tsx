@@ -9,6 +9,8 @@ import ContentHome from "@/components/layout/content/ContentHome";
 import { generateSeoMetadata } from "@/utils/seo/seo";
 import localesConfig from '@/i18n/locales.generated.json';
 
+export const revalidate = 60;
+
 export async function generateMetadata(): Promise<Metadata> {
   const siteInfo = await safeGetSiteInfo();
   const defaultLocale = siteInfo?.i18n?.default_locale || localesConfig.defaultLocale;

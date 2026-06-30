@@ -10,12 +10,13 @@ export const getAllMenus = unstable_cache(
   { revalidate: 300, tags: ['all-menus'] }
 );
 
-export async function fetchMenuByLocation(
-  location: string,
-  lang: string
-): Promise<MenuResponse | null> {
-  return fetchAPI<MenuResponse>(`/custom/v1/menus?lang=${lang}&location=${location}`);
-}
+export const fetchMenuByLocation = unstable_cache(
+  async (location: string, lang: string): Promise<MenuResponse | null> => {
+    return fetchAPI<MenuResponse>(`/custom/v1/menus?lang=${lang}&location=${location}`);
+  },
+  ['menu-by-location'],
+  { revalidate: 300, tags: ['menus'] }
+);
 
 /** SWR fetcher for menu: extracts items from MenuResponse for backward compat. */
 export async function menuSwrFetcher(url: string): Promise<MenuItem[]> {
