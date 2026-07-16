@@ -7,6 +7,7 @@ import HeroConfig from './HeroConfig';
 interface HeroWrapperProps {
   position: 'home' | 'page' | 'archive' | 'custom';
   lang?: string;
+  heroData?: Awaited<ReturnType<typeof import('@/api/wordpressApi').getHeroData>>;
 }
 
 /**
@@ -14,13 +15,12 @@ interface HeroWrapperProps {
  * Fetches data from WordPress API and renders Hero with that data
  * Falls back to hardcoded HeroConfig if WordPress data is unavailable
  */
-export default async function HeroWrapper({ position, lang }: HeroWrapperProps) {
-  const heroData = await getHeroData(position, lang);
+export default async function HeroWrapper({ position, lang, heroData }: HeroWrapperProps) {
+  const data = heroData ?? await getHeroData(position, lang);
   
-  // If no active hero or API failed, render nothing
-  if (!heroData || !heroData.active || !heroData.slides || heroData.slides.length === 0) {
+  if (!data || !data.active || !data.slides || data.slides.length === 0) {
     return null;
   }
   
-  return <HeroConfig heroData={heroData} />;
+  return <HeroConfig heroData={data} />;
 }

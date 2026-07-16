@@ -148,6 +148,7 @@ export default function Hero({
                 alt="Hero background"
                 fill
                 sizes="100vw"
+                quality={60}
                 style={{ objectFit: 'cover' }}
                 className={currentSlideData?.ken_burns ? 'ken-burns-active' : ''}
                 priority

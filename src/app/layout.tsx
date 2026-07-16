@@ -27,8 +27,8 @@ import { WpPageIdProvider } from '@/utils/wordpress/WpPageIdContext';
 import localesConfig from '@/i18n/locales.generated.json';
 import Analytics from '@/components/tracking/Analytics';
 import WpStyles from '@/components/wordpress/WpStyles';
-import { safeGetSiteInfo, getAppearanceSettings } from '@/api/wordpressApi';
-import type { AppearanceSettings } from '@/api/wordpressApi';
+import { safeGetSiteInfo, getAppearanceSettings, fetchMenuByLocation } from '@/api/wordpressApi';
+import type { AppearanceSettings, MenuItem } from '@/api/wordpressApi';
 
 // Lazy load heavy components that aren't needed on every page
 const ModalController = dynamic(() => import('@/components/features/modals/ModalController'), {
@@ -59,11 +59,20 @@ const ChatWhatsApp = dynamic(() => import('@/components/ui/ChatWhatsApp'), {
   ssr: false
 });
 
+// Cache siteInfo for the lifetime of this server instance to avoid duplicate WP calls
+let cachedLayoutSiteInfo: Awaited<ReturnType<typeof safeGetSiteInfo>> | null = null;
+async function getCachedLayoutSiteInfo(locale: string) {
+  if (!cachedLayoutSiteInfo) {
+    cachedLayoutSiteInfo = await safeGetSiteInfo(locale);
+  }
+  return cachedLayoutSiteInfo;
+}
+
 // Generate dynamic metadata from WordPress
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = headers();
   const locale = (headersList.get('x-locale') || localesConfig.defaultLocale) as string;
-  const siteInfo = await safeGetSiteInfo(locale);
+  const siteInfo = await getCachedLayoutSiteInfo(locale);
   
   if (!siteInfo) {
     // Fallback metadata if WordPress is unreachable
@@ -146,26 +155,17 @@ function GlobalUI({ appearance }: { appearance: AppearanceSettings | null }) {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   const headersList = headers();
-  
-  // Fetch site info and appearance config from WordPress
   const currentLocaleForFetch = (headersList.get('x-locale') || localesConfig.defaultLocale) as string;
+  const currentLocale = currentLocaleForFetch;
 
-  const [siteInfo, appearance] = await Promise.all([
-    safeGetSiteInfo(currentLocaleForFetch),
+  const [siteInfo, appearance, messages, mainMenu] = await Promise.all([
+    getCachedLayoutSiteInfo(currentLocaleForFetch),
     getAppearanceSettings(),
+    getMessages({ locale: currentLocaleForFetch }),
+    fetchMenuByLocation('mainnav', currentLocaleForFetch).catch(() => null),
   ]);
-  
-  // Get default locale from WordPress or fallback to config
-  const defaultLocale = siteInfo?.i18n?.default_locale || localesConfig.defaultLocale;
-  
-  // Get the locale from the middleware header (set in middleware.ts)
-  // The middleware extracts the locale from the URL and sets it as 'x-locale' header
-  const currentLocale = (headersList.get('x-locale') || defaultLocale) as string;
 
-  // Providing all messages to the client with the correct locale
-  const messages = await getMessages({ locale: currentLocale });
-  
-  // Get supported locales from WordPress or fallback to config
+  const defaultLocale = siteInfo?.i18n?.default_locale || localesConfig.defaultLocale;
   const supportedLocales = siteInfo?.i18n?.locales || localesConfig.supportedLocales;
   
 
@@ -218,9 +218,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 {!appearance?.spaMode && <ParallaxEffects />}
                 <BodyClass>
                   <TooltipsProvider>
-                    <HeaderServer siteInfo={siteInfo} initialLocale={currentLocale} />
+                    <HeaderServer siteInfo={siteInfo} initialLocale={currentLocale} menusByLocale={mainMenu ? { [currentLocale]: mainMenu.items ?? [] } : undefined} />
                       <main>{children}</main>
-                    <Footer />
+                    <Footer siteInfo={siteInfo} />
                     <GlobalUI appearance={appearance} />
                   </TooltipsProvider>
                 </BodyClass>

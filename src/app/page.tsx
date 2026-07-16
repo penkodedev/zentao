@@ -1,7 +1,7 @@
 // src/app/page.tsx
 // HOME PAGE
 
-import { getCachedHomePage, safeGetSiteInfo } from "@/api/wordpressApi";
+import { getCachedHomePage, safeGetSiteInfo, getHeroData } from "@/api/wordpressApi";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
@@ -31,11 +31,14 @@ export default async function Home() {
   const siteInfo = await safeGetSiteInfo();
   const defaultLocale = siteInfo?.i18n?.default_locale || localesConfig.defaultLocale;
   const locale = headers().get("x-locale") || defaultLocale;
-  const homePage = await getCachedHomePage(locale);
+  const [homePage, heroData] = await Promise.all([
+    getCachedHomePage(locale),
+    getHeroData('home', locale === defaultLocale ? undefined : locale),
+  ]);
 
   if (!homePage) {
     notFound();
   }
 
-  return <ContentHome page={homePage} lang={locale} />;
+  return <ContentHome page={homePage} lang={locale} heroData={heroData} />;
 }

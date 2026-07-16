@@ -77,27 +77,48 @@ export async function getHomePage(lang?: string): Promise<Page | null> {
     : '/wp/v2/pages?_embed';
   const fallbackPages = await fetchAPI<Page[]>(fallbackQuery);
 
-  if (fallbackPages && fallbackPages.length > 0) {
-    const byRootLink = fallbackPages.find((p) => {
-      try { return new URL(p.link).pathname === '/'; } catch { return false; }
-    });
-    if (byRootLink) return byRootLink;
+  if (!fallbackPages || fallbackPages.length === 0) {
+    const fallbackAll = await fetchAPI<Page[]>('/wp/v2/pages?_embed');
+    if (fallbackAll && fallbackAll.length > 0) {
+      const byRootLink = fallbackAll.find((p) => {
+        try { return new URL(p.link).pathname === '/'; } catch { return false; }
+      });
+      if (byRootLink) return byRootLink;
 
-    const byTemplate = fallbackPages.find(
-      (p) => p.template === 'front-page' || p.meta?.['_wp_page_template'] === 'front-page'
-    );
-    if (byTemplate) return byTemplate;
+      const byTemplate = fallbackAll.find(
+        (p) => p.template === 'front-page' || p.meta?.['_wp_page_template'] === 'front-page'
+      );
+      if (byTemplate) return byTemplate;
 
-    const commonSlugs = ['inicio', 'home', 'portada', 'accueil', 'landing'];
-    for (const s of commonSlugs) {
-      const page = fallbackPages.find((p) => p.slug === s);
-      if (page) return page;
+      const commonSlugs = ['inicio', 'home', 'portada', 'accueil', 'landing'];
+      for (const s of commonSlugs) {
+        const page = fallbackAll.find((p) => p.slug === s);
+        if (page) return page;
+      }
+
+      return fallbackAll[0];
     }
 
-    return fallbackPages[0];
+    return null;
   }
 
-  return null;
+  const byRootLink = fallbackPages.find((p) => {
+    try { return new URL(p.link).pathname === '/'; } catch { return false; }
+  });
+  if (byRootLink) return byRootLink;
+
+  const byTemplate = fallbackPages.find(
+    (p) => p.template === 'front-page' || p.meta?.['_wp_page_template'] === 'front-page'
+  );
+  if (byTemplate) return byTemplate;
+
+  const commonSlugs = ['inicio', 'home', 'portada', 'accueil', 'landing'];
+  for (const s of commonSlugs) {
+    const page = fallbackPages.find((p) => p.slug === s);
+    if (page) return page;
+  }
+
+  return fallbackPages[0];
 }
 
 export const getCachedHomePage = unstable_cache(

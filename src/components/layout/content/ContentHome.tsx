@@ -10,13 +10,14 @@ import YoastJsonLd from '@/components/seo/YoastJsonLd';
 type ContentHomeProps = {
   page: Page;
   lang?: string;
+  heroData?: Awaited<ReturnType<typeof import('@/api/wordpressApi').getHeroData>>;
 };
 
 /**
  * Home Page Template
  * Used by both app/page.tsx and app/[...slug]/page.tsx (routes with locale)
  */
-export default function ContentHome({ page, lang }: ContentHomeProps) {
+export default function ContentHome({ page, lang, heroData }: ContentHomeProps) {
   const processed = processContent(page.content.rendered);
   const hasForm = page.content.rendered.includes('wpcf7-form');
 
@@ -24,7 +25,7 @@ export default function ContentHome({ page, lang }: ContentHomeProps) {
     <>
       <YoastJsonLd content={page} />
       <WpPageIdSetter pageId={page.id} />
-      <HeroWrapper position="home" lang={lang} />
+      <HeroWrapper position="home" lang={lang} heroData={heroData} />
       <div className="page-one-col">
       <span id='index-home' />
         <AnimatedArticle>

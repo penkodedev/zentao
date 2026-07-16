@@ -15,20 +15,6 @@ type CptConfig = {
 // *******  Add and configure new CPTs here: *******//
 export const CPT_CONFIG: CptConfig[] = [
 	{
-		slug: 'noticias',
-		translations: {
-			es: 'noticias',
-			en: 'news',
-		},
-	},
-	{
-		slug: 'recursos',
-		translations: {
-			es: 'recursos',
-			en: 'resorts',
-		},
-	},
-	{
 		slug: 'modales',
 		translations: {
 			es: 'modales',

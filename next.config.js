@@ -9,12 +9,9 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'src/styles/sass')],
   },
 
-  // i18n: {
-  //   locales: ['es', 'en', 'fr'], // Supported languages
-  //   defaultLocale: 'es',       // Main language
-  // },
-
   images: {
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: (() => {
       const patterns = [];
       const apiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL;
@@ -33,19 +30,16 @@ const nextConfig = {
         }
       }
 
-      // Always allow penkode.com for external testing
       patterns.push({
         protocol: 'https',
         hostname: 'zentaomasajes.es',
       });
 
-      // Allow CMS subdomain (images served from cms.zentaomasajes.es)
       patterns.push({
         protocol: 'https',
         hostname: 'cms.zentaomasajes.es',
       });
 
-      // Additional local hostnames if needed
       if (process.env.NODE_ENV === 'development') {
         patterns.push({
           protocol: 'http',

@@ -10,7 +10,8 @@ interface HeaderServerProps {
   variant?: "default" | "home";
   menuVariant?: 'desktop' | 'mobile' | 'responsive';
   initialLocale?: string;
-  siteInfo?: SiteInfo; // Accept siteInfo from parent
+  siteInfo?: SiteInfo;
+  menusByLocale?: Record<string, MenuItem[]>;
 }
 
 // Default fallback site info when WordPress is unavailable
@@ -45,35 +46,37 @@ const defaultSiteInfo: SiteInfo = {
 
 export default async function HeaderServer({
   variant = "default",
-  menuVariant: menuVariantProp, // Controlled by props
+  menuVariant: menuVariantProp,
   initialLocale,
-  siteInfo: siteInfoProp, // Site info from parent
+  siteInfo: siteInfoProp,
+  menusByLocale: menusByLocaleProp,
 }: HeaderServerProps) {
-  // Handle undefined menuVariant (use responsive as default)
   const menuVariant = menuVariantProp || 'responsive';
-  
-  // Use siteInfo from props or fallback to default
   const siteInfo = siteInfoProp || defaultSiteInfo;
-  
+
   const defaultLocale = siteInfo.i18n?.default_locale || localesConfig.defaultLocale;
   const locale = initialLocale || defaultLocale;
   const supportedLocales = siteInfo.i18n?.locales || localesConfig.supportedLocales;
 
-  const menusByLocale: Record<string, MenuItem[]> = {};
+  const menusByLocale: Record<string, MenuItem[]> = menusByLocaleProp && Object.keys(menusByLocaleProp).length > 0
+    ? menusByLocaleProp
+    : {};
   let megaMenuEnabled = false;
 
-  try {
-    const menuPromises = supportedLocales.map(async (loc) => {
-      const res = await fetchMenuByLocation('mainnav', loc);
-      return { locale: loc, res };
-    });
-    const results = await Promise.all(menuPromises);
-    results.forEach(({ locale: loc, res }) => {
-      menusByLocale[loc] = res?.items ?? [];
-      if (res?.mega_menu_enabled) megaMenuEnabled = true; // Global setting, same for all locales
-    });
-  } catch {
-    // Fallback: menus fetched client-side
+  if (Object.keys(menusByLocale).length === 0) {
+    try {
+      const menuPromises = supportedLocales.map(async (loc) => {
+        const res = await fetchMenuByLocation('mainnav', loc);
+        return { locale: loc, res };
+      });
+      const results = await Promise.all(menuPromises);
+      results.forEach(({ locale: loc, res }) => {
+        menusByLocale[loc] = res?.items ?? [];
+        if (res?.mega_menu_enabled) megaMenuEnabled = true;
+      });
+    } catch {
+      // Fallback: menus fetched client-side
+    }
   }
 
   return (

@@ -1,6 +1,6 @@
 // Catch-all route to handle pages, CPT archives, singles, and taxonomies from WordPress.
 
-import { getContentBySlug, getAllContent, getHomePage, safeGetSiteInfo, safeGetAllContent } from "@/api/wordpressApi";
+import { getContentBySlug, getAllContent, getCachedHomePage, safeGetSiteInfo, safeGetAllContent } from "@/api/wordpressApi";
 import { fetchAPI } from "@/api/wordpressApi";
 import { generateSeoMetadata } from "@/utils/seo/seo";
 import { notFound } from "next/navigation";
@@ -191,34 +191,27 @@ export async function generateStaticParams() {
       });
 
       try {
-        // Get posts in all languages dynamically
-        const allPosts: WpContent[] = [];
-        
-        for (const locale of localesConfig.supportedLocales) {
-          const apiParams = locale === localesConfig.defaultLocale 
+        const localePromises = localesConfig.supportedLocales.map(async (locale) => {
+          const apiParams = locale === localesConfig.defaultLocale
             ? '?per_page=10&_embed'
             : `?per_page=10&_embed&lang=${locale}`;
           const posts = await safeGetAllContent<WpContent>(cpt, apiParams);
-          if (posts && posts.length > 0) allPosts.push(...posts);
-        }
-
-        // Remove duplicates by ID
-        const uniquePosts = allPosts.filter((post, index, self) =>
-          index === self.findIndex(p => p.id === post.id)
-        );
+          return posts && posts.length > 0 ? posts : [];
+        });
+        const localeResults = await Promise.allSettled(localePromises);
+        const allPosts: WpContent[] = localeResults.flatMap((result) => (result.status === 'fulfilled' && result.value ? result.value : []));
+        const uniquePosts = allPosts.filter((post, index, self) => index === self.findIndex((p) => p.id === post.id));
 
         if (uniquePosts.length > 0) {
-          uniquePosts.forEach(post => {
-            // Add single CPT pages in all locales
+          uniquePosts.forEach((post) => {
             params.push({ slug: [cpt, post.slug] });
-            
-            localesConfig.supportedLocales.forEach(locale => {
+            localesConfig.supportedLocales.forEach((locale) => {
               const translatedSlug = getTranslatedCptSlug(cpt, locale);
               params.push({ slug: [locale, translatedSlug, post.slug] });
             });
           });
         }
-      } catch (error) {
+      } catch {
         // Skip CPTs that fail to load
       }
     }
@@ -260,13 +253,13 @@ export default async function CatchAllPage({ params }: PageProps) {
     if (!term) return notFound();
     // 2. Get CPTs associated with this taxonomy
     const cptsForTax = taxonomyObj.types || [];
-    let posts: WpContent[] = [];
-    for (const cpt of cptsForTax) {
-      const cptPosts = await fetchAPI(`/wp/v2/${cpt}?${taxSlug}=${term.id}&_embed${locale !== defaultLocale ? `&lang=${locale}` : ''}`);
-      if (Array.isArray(cptPosts) && cptPosts.length > 0) {
-        posts = posts.concat(cptPosts);
-      }
-    }
+    const cptRequests = cptsForTax.map((cpt) =>
+      fetchAPI(`/wp/v2/${cpt}?${taxSlug}=${term.id}&_embed${locale !== defaultLocale ? `&lang=${locale}` : ''}`)
+    );
+    const cptResults = await Promise.all(cptRequests);
+    const posts: WpContent[] = cptResults.flatMap((cptPosts) =>
+      Array.isArray(cptPosts) && cptPosts.length > 0 ? cptPosts : []
+    );
     // 3. Render taxonomy archive page
     return (
       <ContentTaxonomy
@@ -287,11 +280,16 @@ export default async function CatchAllPage({ params }: PageProps) {
     // 2. Get all posts for all terms of this taxonomy
     let posts: WpContent[] = [];
     if (terms && terms.length > 0) {
-      for (const term of terms) {
-        // Get CPTs associated with this taxonomy
+      const termRequests = terms.map((term) => {
         const cptsForTax = taxonomyObj.types || [];
-        for (const cpt of cptsForTax) {
-          const cptPosts = await fetchAPI(`/wp/v2/${cpt}?${taxonomyObj.slug}=${term.id}&_embed${locale !== defaultLocale ? `&lang=${locale}` : ''}`);
+        const cptRequests = cptsForTax.map((cpt) =>
+          fetchAPI(`/wp/v2/${cpt}?${taxonomyObj.slug}=${term.id}&_embed${locale !== defaultLocale ? `&lang=${locale}` : ''}`)
+        );
+        return Promise.all(cptRequests);
+      });
+      const termResults = await Promise.all(termRequests);
+      for (const cptPostsArr of termResults) {
+        for (const cptPosts of cptPostsArr) {
           if (Array.isArray(cptPosts) && cptPosts.length > 0) {
             posts = posts.concat(cptPosts);
           }
@@ -360,7 +358,7 @@ export default async function CatchAllPage({ params }: PageProps) {
   if (isLocaleOnly) {
     const defaultLocale = await getDefaultLocale();
     const lang = firstSegment === defaultLocale ? undefined : firstSegment;
-    const homePage = await getHomePage(lang);
+    const homePage = await getCachedHomePage(lang);
 
     if (!homePage) {
       notFound();

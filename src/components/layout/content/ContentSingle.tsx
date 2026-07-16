@@ -80,7 +80,7 @@ export default async function ContentSingle({
           
 
           {/* AUDIO PLAYER GOOGLE TEXT TO SPEECH (config. CPTs*/}
-          {appearance?.ttsEnabled !== false && ['posts', 'recursos', 'noticias'].includes(postType) && post.audio_url && ( 
+          {appearance?.ttsEnabled !== false && ['posts'].includes(postType) && post.audio_url && ( 
             <div className="audio-player-section">
               <AudioPlayer
                 src={post.audio_url}
