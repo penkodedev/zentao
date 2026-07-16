@@ -28,7 +28,8 @@ import localesConfig from '@/i18n/locales.generated.json';
 import Analytics from '@/components/tracking/Analytics';
 import WpStyles from '@/components/wordpress/WpStyles';
 import { safeGetSiteInfo, getAppearanceSettings, fetchMenuByLocation } from '@/api/wordpressApi';
-import type { AppearanceSettings, MenuItem } from '@/api/wordpressApi';
+import type { AppearanceSettings } from '@/api/wordpressApi';
+import type { MenuItem } from '@/types/wordpressTypes';
 
 // Lazy load heavy components that aren't needed on every page
 const ModalController = dynamic(() => import('@/components/features/modals/ModalController'), {
