@@ -79,26 +79,28 @@ export default function Hero({
   // Defer video src until after first paint so LCP is not blocked by the mp4
   const [allowVideo, setAllowVideo] = useState(false);
 
-  useEffect(() => {
-    let cancelled = false;
-    const enableVideo = () => {
-      if (!cancelled) setAllowVideo(true);
-    };
+useEffect(() => {
+  let cancelled = false;
+  const enableVideo = () => {
+    if (!cancelled) setAllowVideo(true);
+  };
 
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(enableVideo, { timeout: 1500 });
-      return () => {
-        cancelled = true;
-        window.cancelIdleCallback(id);
-      };
-    }
-
-    const t = window.setTimeout(enableVideo, 200);
+  if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+    const id = window.requestIdleCallback(enableVideo, { timeout: 1500 });
     return () => {
       cancelled = true;
-      window.clearTimeout(t);
+      window.cancelIdleCallback(id);
     };
-  }, []);
+  }
+
+  if (typeof window !== 'undefined') {
+    const t = setTimeout(enableVideo, 200);
+    return () => {
+      cancelled = true;
+      clearTimeout(t);
+    };
+  }
+}, []);
 
   // Auto-play functionality
   useEffect(() => {
