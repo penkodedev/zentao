@@ -76,6 +76,29 @@ export default function Hero({
   const heroSlides = slides || (title || subtitle || buttonText ? [{ title, subtitle, buttonText, buttonLink }] : []);
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  // Defer video src until after first paint so LCP is not blocked by the mp4
+  const [allowVideo, setAllowVideo] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const enableVideo = () => {
+      if (!cancelled) setAllowVideo(true);
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(enableVideo, { timeout: 1500 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
+    }
+
+    const t = window.setTimeout(enableVideo, 200);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, []);
 
   // Auto-play functionality
   useEffect(() => {
@@ -102,7 +125,9 @@ export default function Hero({
   const slideVariants = heroVariants.slideVariants;
 
   const currentSlideData = heroSlides[currentSlide];
-  
+  // First slide: skip entrance animation so title/CTA paint immediately
+  const isFirstSlide = currentSlide === 0;
+
   // Helper para decodificar HTML entities (funciona en SSR)
   const decodeHTML = (html: string): string => {
     const entities: Record<string, string> = {
@@ -115,7 +140,7 @@ export default function Hero({
     };
     return html.replace(/&[^;]+;/g, (entity) => entities[entity] || entity);
   };
-  
+
   // Normalize WordPress snake_case to camelCase for easier use
   const bgType = (currentSlideData?.background_type || currentSlideData?.backgroundType || 'gradient') as 'gradient' | 'image' | 'video' | 'none';
   const bgImage = currentSlideData?.background_image || currentSlideData?.backgroundImage;
@@ -133,7 +158,7 @@ export default function Hero({
         <AnimatePresence mode="sync">
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0 }}
+            initial={isFirstSlide ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
@@ -151,10 +176,10 @@ export default function Hero({
                 quality={60}
                 style={{ objectFit: 'cover' }}
                 className={currentSlideData?.ken_burns ? 'ken-burns-active' : ''}
-                priority
+                priority={isFirstSlide}
               />
             )}
-            {bgType === 'video' && bgVideo && (
+            {bgType === 'video' && bgVideo && allowVideo && (
               <video
                 ref={(video) => {
                   if (video && playbackRate) {
@@ -162,11 +187,11 @@ export default function Hero({
                   }
                 }}
                 src={bgVideo}
+                preload="metadata"
                 autoPlay
                 loop
                 muted
                 playsInline
-                // Styles moved to hero-home.scss for consistency
               />
             )}
             {bgType === 'none' && currentSlideData?.backgroundColor && (
@@ -175,14 +200,14 @@ export default function Hero({
           </motion.div>
         </AnimatePresence>
       </div>
-      
+
       {/* Overlay con opacidad y color dinámicos */}
-      <div 
-        className="hero-overlay" 
-        style={{ 
+      <div
+        className="hero-overlay"
+        style={{
           backgroundColor: currentSlideData?.overlay_color ?? '#000000',
-          opacity: currentSlideData?.overlay_opacity ?? 0.3 
-        }} 
+          opacity: currentSlideData?.overlay_opacity ?? 0.3
+        }}
       />
 
       {/* Viñeta fotográfica */}
@@ -197,12 +222,12 @@ export default function Hero({
         />
       )}
 
-      {/* Contenido animado con slides */}
-      <div 
+      {/* Contenido: primer slide sin animación de entrada (mejor LCP) */}
+      <div
         className="hero-content"
         style={{
-          justifyContent: currentSlideData?.content_position === 'top' ? 'flex-start' 
-                        : currentSlideData?.content_position === 'bottom' ? 'flex-end' 
+          justifyContent: currentSlideData?.content_position === 'top' ? 'flex-start'
+                        : currentSlideData?.content_position === 'bottom' ? 'flex-end'
                         : 'center',
           alignItems: currentSlideData?.content_align === 'left' ? 'flex-start'
                     : currentSlideData?.content_align === 'right' ? 'flex-end'
@@ -214,12 +239,12 @@ export default function Hero({
           <motion.div
             key={currentSlide}
             variants={slideVariants}
-            initial="enter"
+            initial={isFirstSlide ? false : "enter"}
             animate="center"
             exit="exit"
             transition={{
               duration: 0.8,
-              ease: [0.25, 0.46, 0.45, 0.94], // Cubic bezier para más suavidad
+              ease: [0.25, 0.46, 0.45, 0.94],
               scale: { duration: 0.6 },
               opacity: { duration: 0.4 }
             }}
@@ -227,32 +252,32 @@ export default function Hero({
           >
             <motion.div
               variants={containerVariants}
-              initial="hidden"
+              initial={isFirstSlide ? false : "hidden"}
               animate="visible"
             >
               {heroSlides[currentSlide]?.title && (
-                <motion.h1 
+                <motion.h1
                   variants={itemVariants}
-                  style={{ 
-                    textAlign: (heroSlides[currentSlide].title_align || 'left') as 'left' | 'center' | 'right' 
+                  style={{
+                    textAlign: (heroSlides[currentSlide].title_align || 'left') as 'left' | 'center' | 'right'
                   }}
                 >
                   {heroSlides[currentSlide].title}
                 </motion.h1>
               )}
               {heroSlides[currentSlide]?.subtitle && (
-                <motion.div 
+                <motion.div
                   variants={itemVariants}
-                  dangerouslySetInnerHTML={{ 
-                    __html: decodeHTML(heroSlides[currentSlide].subtitle || '') 
+                  dangerouslySetInnerHTML={{
+                    __html: decodeHTML(heroSlides[currentSlide].subtitle || '')
                   }}
                 />
               )}
-              {(heroSlides[currentSlide]?.buttonText || heroSlides[currentSlide]?.button_text) && 
+              {(heroSlides[currentSlide]?.buttonText || heroSlides[currentSlide]?.button_text) &&
                (heroSlides[currentSlide]?.buttonLink || heroSlides[currentSlide]?.button_link) && (
                 <motion.div variants={itemVariants}>
-                  <Link 
-                    href={(heroSlides[currentSlide].button_link || heroSlides[currentSlide].buttonLink)!} 
+                  <Link
+                    href={(heroSlides[currentSlide].button_link || heroSlides[currentSlide].buttonLink)!}
                     className={`button hero-button hero-button-${heroSlides[currentSlide].button_style || 'primary'}`}
                   >
                     {heroSlides[currentSlide].button_text || heroSlides[currentSlide].buttonText} <Icons.ArrowRight size={21} strokeWidth={1.5} />
@@ -271,7 +296,7 @@ export default function Hero({
             type="button"
             onClick={prevSlide}
             className="hero-nav hero-nav-prev"
-            aria-label="Slide anterior"
+            aria-label="Previous Slide"
           >
             <Icons.ChevronLeft size={18} />
           </button>
@@ -279,7 +304,7 @@ export default function Hero({
             type="button"
             onClick={nextSlide}
             className="hero-nav hero-nav-next"
-            aria-label="Slide siguiente"
+            aria-label="Next Slide"
           >
             <Icons.ChevronRight size={18} />
           </button>
